@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>注册登录页面</title>
+</head>
+<link rel="stylesheet" type="text/css" href="/static/css/login.css">
+<style type="text/css">
+	::placeholder {
+		color:red;
+	};
+</style>
+<body>
+	<div class="main">
+		<div class="title">
+			<span style="font-size: 22px">登录</span>
+			<!--<b>·</b>
+			<a href="">注册</a>-->
+		</div>
+		<div class="container">
+			<div class="input-prepend ">
+			<input type="text" placeholder="用户名" name="username">
+			<i class="iconfont"></i>
+			</div>
+			<div class="input-prepend ">
+			<input type="password" placeholder="密码" name="password">
+			<i class="iconfont"></i>
+			</div>
+			<input type="button" class="sign-in-button" name="submit" value="登录">
+			<div class="rightTips">
+				<a href="">忘记密码？</a>
+			</div>
+		</div>
+	</div>
+	<script src="/static/js/jquery-1.12.4.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/ajax.js"></script>
+	<script type="text/javascript">
+			// body...
+		function checkData_form(){  //检查form表单数据的合法性
+			var index = true;
+			var username = $("input[name='username']").val();
+			var password = $("input[name='password']").val();
+			$("input").css("border-color", "#ddd");
+			if(username == ""){
+		    	index = false;
+		    	$("input[name='username']").attr("placeholder","please enter username!");
+		    	$("input[name='username']").attr("style","::placeholder:red")
+			} 
+			if(password == ""){
+		    	index = false;
+		    	$("input[name='password']").css("border-color", "#f33");
+			}
+			return index
+			}
+		function checkLogin(){
+			var verifyInput = checkData_form();
+			if (verifyInput == true){
+				var username = $("input[name='username']").val();
+				var password = $("input[name='password']").val();
+				data = {'userNo':username, 'passwd':password}
+				postRequest("/verifyLogin/",data,true,verifyResult);
+			}else {
+				alert("username or password is not should null!")
+			}
+		}
+		function verifyResult(ret){
+			if(ret['result'] == true) {
+				window.location.href = "/index/"+ret['sessionId'];
+			}else {
+				alert(ret['error']);
+			}
+
+		}
+		$(function () {
+			$("input[name = 'username']").keydown(function(event){  
+    			if(event.which == "13")      
+            		$("input[name = 'password']").focus() 
+			})
+			$("input[name = 'password']").keydown(function(event){  
+    			if(event.which == "13")      
+            		checkLogin(); 
+			})
+			$("input[name = 'submit']").click(function(){
+				checkLogin();
+			});
+		})
+
+	</script>
+</body>
+</html>
