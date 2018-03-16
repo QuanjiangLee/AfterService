@@ -1,7 +1,6 @@
-from django.apps import AppConfig
-from serviceApp.DB_connect import *
+#from django.apps import AppConfig
 
-class MapappConfig(AppConfig):
-    name = 'serviceApp'
+#class MapappConfig(AppConfig):
+#    name = 'serviceApp'
 
 

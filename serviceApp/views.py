@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.decorators import login_required
 from serviceApp.apps import *
+from serviceApp.models import userInf, phonesInf, workOrders, gradesInf, aboutInf
 
 # Create your views here.
 
