@@ -29,6 +29,7 @@ def verifyLogin(request):
         passwd = data['passwd']
     print('userNo',userNo)
     print('passwd',passwd)
+   # user = userInf.objects.filter(user_name=userNo, user_passwd=passwd).first()
     user = authenticate(request,username = userNo, password = passwd)
     if user is not None:
         auth_login(request,user)

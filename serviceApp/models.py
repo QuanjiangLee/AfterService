@@ -1,8 +1,9 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
-class userInf(models.Model):
+
+class userInf(User):
     user_id = models.IntegerField(primary_key=True, null=False)
     user_name = models.CharField(max_length = 30)
     user_grant = models.BooleanField(default=False) 
@@ -15,7 +16,7 @@ class userInf(models.Model):
 
 class phonesInf(models.Model):
     phone_id = models.IntegerField(primary_key=True, null=False)
-    admin_id = models.ForeignKey(userInf) 
+    admin_id = models.ForeignKey(userInf,on_delete=models.DO_NOTHING) 
     phone_type = models.CharField(max_length = 30)
     phone_image = models.ImageField(upload_to = 'pic_folder/', default = 'pic_folder/no-img.jpg')
     phone_details = models.TextField() 
@@ -24,8 +25,8 @@ class phonesInf(models.Model):
 
 class workOrders(models.Model):
     order_id = models.IntegerField(primary_key=True, null=False)
-    user_id = models.ForeignKey(userInf)
-    phone_id = models.ForeignKey(phonesInf)
+    user_id = models.ForeignKey(userInf, on_delete=models.DO_NOTHING)
+    phone_id = models.ForeignKey(phonesInf, on_delete=models.DO_NOTHING)
     order_title = models.CharField(max_length = 30)
     order_details = models.CharField(max_length = 255)
     order_status = models.BooleanField(default=False)
@@ -38,7 +39,7 @@ class workOrders(models.Model):
     	return self.order_title
 
 class gradesInf(models.Model):
-    user_id = models.ForeignKey(userInf)
+    user_id = models.ForeignKey(userInf, on_delete=models.DO_NOTHING)
     user_grade = models.FloatField()
     user_message =  models.TextField()
     ava_grade = models.FloatField()
@@ -46,7 +47,7 @@ class gradesInf(models.Model):
         return self.user_message
 
 class aboutInf(models.Model):
-    admin_id = models.ForeignKey(userInf)
+    admin_id = models.ForeignKey(userInf, on_delete=models.DO_NOTHING)
     about_title = models.CharField(max_length = 30)
     about_image = models.ImageField(upload_to = 'pic_folder/', default = 'pic_folder/no-img.jpg')
     about_content = models.TextField()
