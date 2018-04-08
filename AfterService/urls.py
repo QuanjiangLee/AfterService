@@ -18,15 +18,10 @@ from django.contrib import admin
 from serviceApp import views
 
 urlpatterns = [
-	url(r'^$', views.login, name='login'),
-	url(r'^login/', views.login, name='login'),
-	url(r'^accounts/login/', views.login),
+	url(r'^$', views.index),
 	url(r'^verifyLogin/', views.verifyLogin),
 	url(r'^userLoginOut/', views.userLoginOut),
 	url(r'^index/*', views.index),
-    url(r'^delHost/', views.delHost),
-    url(r'^addHost/', views.addHost),
-    url(r'^updateHost/', views.updateHost),
-    url(r'^filterHost/', views.filterHost),
-    url(r'^admin/', admin.site.urls),
+    url(r'^userIndex/*', views.index),
+    url(r'^adminIndex/*', views.index),
 ]

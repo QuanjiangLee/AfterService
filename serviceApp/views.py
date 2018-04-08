@@ -1,19 +1,15 @@
 import json
 import time
-import urllib
-from urllib import parse
 from django.http import HttpResponse
 from django.contrib.sessions.models import Session
 from django.shortcuts import render, redirect
 from datetime import datetime
 from django.http import Http404
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import authenticate, login as auth_login, logout
-from django.contrib.auth.decorators import login_required
 from serviceApp.apps import *
-from serviceApp.models import userInf, phonesInf, workOrders, gradesInf, aboutInf
 
 # Create your views here.
+
 
 def login(request):
     return render(request, 'login.html')
@@ -29,29 +25,42 @@ def verifyLogin(request):
         passwd = data['passwd']
     print('userNo',userNo)
     print('passwd',passwd)
-   # user = userInf.objects.filter(user_name=userNo, user_passwd=passwd).first()
-    user = authenticate(request,username = userNo, password = passwd)
-    if user is not None:
-        auth_login(request,user)
+    user = is_user_exist(userNo, passwd)
+    print('user is', user)
+    if user[0][0] > 0:
+        user_grant = user[0][1]
+        request.session["login_user"] = userNo
+        request.session["user_grant"] = user_grant
         sessionId=request.session.session_key 
-        response = {'result':True, 'sessionId':sessionId}
+        print('sessionId is ',sessionId)
+        print('user_grant is',user_grant)
+        response = {'result':True, 'sessionId':sessionId, 'user_grant':user_grant}
         return HttpResponse(json.dumps(response), content_type='application/json;charset=utf-8')
     else:
         response = {'result':False, 'error': "username or password is error!"}
         return HttpResponse(json.dumps(response), content_type='application/json;charset=utf-8')
 
+
 @csrf_exempt
 def userLoginOut(request):
-    if not request.user.is_authenticated:
-        return redirect('/login')
-    logout(request)
+    try:
+        del request.session['login_user']
+        del request.session['user_grant']
+    except KeyError:
+        pass
     return HttpResponse(json.dumps({'ret':True}), content_type='application/json;charset=utf-8')
 
 def index(request):
-    if not request.user.is_authenticated:
-        return redirect('/login')
-    hostList = myServerMap.objects.all()
-    return render(request, 'index.html', {'hostList' : hostList})
+    if is_logined(request) is False:
+        cusInfo = {'hello':'unknow', "user_grant":"custom"}
+        return render(request, 'index.html',{'cusInfo':cusInfo})
+    if is_logined(request) == 'user':
+        userInfo = {'hello':'user',"user_grant":'user'}
+        return render(request, 'userIndex.html', {'userInfo' : userInfo})
+    if is_logined(request) == 'admin':
+        adminInfo = {'hello':'admin', "user_grant":'admin'}
+        return render(request, 'adminIndex.html', {'adminInfo' : adminInfo})
+
 
 @csrf_exempt
 def addHost(request):

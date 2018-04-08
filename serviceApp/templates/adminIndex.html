@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Host maps</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav>你好，世界！
+        <button type="text" onclick="logout()" class="btn btn-link logout " style="float: right;font-size: 20px;color:black;">注销登录？</button>
+    </nav>
+    <div class="search">
+        <input type="text" onfocus="enterSearch()" placeholder="搜索..." name="sinput" class="sinput">
+        <input type="button" onclick="filterHost()" class="sbt" name="search" value="搜索">
+    </div>
+    <div class="container">
+        {% include 'host.html' %}
+        <div class="content-add">
+            <button onclick="addHost(this)" class="new-host btn-fade">+</button>
+        </div>
+        <div class="bottom-add">
+            <button onclick="addHost(this)" class="new-host btn-fade" style="margin: auto 50px;">+</button>
+        </div>
+        <script src="/static/js/jquery-1.12.4.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/ajax.js"></script>
+        <script src="/static/js/text-utils.js"></script>
+        <script>
+        function logout() {
+                postRequest("/userLoginOut/", {}, false, logoutResult);
+            }
+            function logoutResult(ret) {
+                if (ret['ret'] == true) {
+                    window.location.href = "/index/";
+                }
+            }
+        </script>
