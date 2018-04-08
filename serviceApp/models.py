@@ -1,10 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 # Create your models here.
 
 
-class userInf(User):
-    user_id = models.IntegerField(primary_key=True, null=False)
+class userInf(models.Model):
+    user_id = models.AutoField(primary_key=True, null=False)
     user_name = models.CharField(max_length = 30)
     user_grant = models.BooleanField(default=False) 
     user_sex = models.CharField(max_length = 5)
@@ -15,7 +15,7 @@ class userInf(User):
         return self.user_name
 
 class phonesInf(models.Model):
-    phone_id = models.IntegerField(primary_key=True, null=False)
+    phone_id = models.AutoField(primary_key=True, null=False)
     admin_id = models.ForeignKey(userInf,on_delete=models.DO_NOTHING) 
     phone_type = models.CharField(max_length = 30)
     phone_image = models.ImageField(upload_to = 'pic_folder/', default = 'pic_folder/no-img.jpg')
@@ -24,7 +24,7 @@ class phonesInf(models.Model):
         return self.phone_type
 
 class workOrders(models.Model):
-    order_id = models.IntegerField(primary_key=True, null=False)
+    order_id = models.AutoField(primary_key=True, null=False)
     user_id = models.ForeignKey(userInf, on_delete=models.DO_NOTHING)
     phone_id = models.ForeignKey(phonesInf, on_delete=models.DO_NOTHING)
     order_title = models.CharField(max_length = 30)

@@ -6,7 +6,7 @@ from serviceApp.DB_connect import DBMethods
 
 def is_user_exist(userNo, passwd):
     values = (userNo, passwd)
-    dbStr = "select Count(*), user_grant from serviceApp_userinf where user_name='{0}' and user_passwd='{1}';"
+    dbStr = "select Count(*), user_grant from serviceApp_userinf where user_name='{0}' and user_passwd=password('{1}');"
     dbStr = dbStr.format( *values )
     print(dbStr)
     db = DBMethods()
@@ -25,3 +25,12 @@ def is_logined(request):
     elif user_grant == 0:
         return 'user' 
     return False
+
+def add_user(userNo, passwd, user_sex):
+    values = (userNo, passwd,user_sex)
+    dbStr = "insert into serviceApp_userinf (user_name,user_grant, user_sex, user_grades, user_passwd) values('{0}',0,'{1}',0,password('{3}'));"
+    dbStr = dbStr.format( *values )
+    print(dbStr)
+    db = DBMethods()
+    ret = db.updateMethods(dbStr)
+    return ret
