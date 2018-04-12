@@ -15,11 +15,6 @@
     body {
         background-color: #cccccc8f; 
     }
-    nav {
-        position: fixed;
-        top:0px;
-        overflow: hidden;
-    }
   </style>
   <script type="text/javascript">
     function dialogAlert(title, content) {
@@ -51,8 +46,8 @@
     var html = ''
     html += '&emsp;用户名:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="text" placeholder="用户名" name="username"><br>'
     html += '&emsp;&emsp;密码:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="password" box-shadow: none;border - radius: 2px;padding: 6px 10px;" placeholder="密码" name="password"><br>'
-    html += '重复密码:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="password" box-shadow: none;border - radius: 2px;padding: 6px 10px;" placeholder="重复密码" name="password"><br>'
-    html += '<input style="margin: 10px;" type="button" class="sign-in-button btn btn-info" name="submit" value="注册">'
+    html += '重复密码:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="password" box-shadow: none;border - radius: 2px;padding: 6px 10px;" placeholder="重复密码" name="repassword"><br>'
+    html += '<input style="margin: 10px;" type="button" onclick="registerUser(this)" class="sign-in-button btn btn-info" name="submit" value="注册">'
     html += '<div class="rightTips" onclick="userLogin()"><a href="javascript:void(0);">返回登录？</a></div></div>'
     title = '注册';
     dialogAlert(title, html);
@@ -66,15 +61,21 @@
         var index = true;
         var username = $("input[name='username']").val();
         var password = $("input[name='password']").val();
+        var repassword = $("input[name='repassword']");
         $("input").css("border-color", "#ddd");
         if (username == "") {
             index = false;
-            $("input[name='username']").attr("placeholder", "please enter username!");
-            $("input[name='username']").attr("style", "::placeholder:red")
+            $("input[name='username']").css("border-color", "#f33");
         }
         if (password == "") {
             index = false;
             $("input[name='password']").css("border-color", "#f33");
+        }
+        if (repassword.length != 0 ){
+            if (repassword.val() == ""){
+                index = false
+                $("input[name='repassword']").css("border-color", "#f33");
+            }
         }
         return index
     }
@@ -86,7 +87,7 @@
             data = { 'userNo': username, 'passwd': password }
             postRequest("/verifyLogin/", data, true, verifyResult);
         } else {
-            alert("username or password is not should null!")
+            alert("要登录的用户名或密码不能为空!")
         }
     }
     function verifyResult(ret) {
@@ -100,6 +101,32 @@
             alert(ret['error']);
         }
 
+    }
+
+    function registerUser(elem) {
+        var verifyInput = checkData_form();
+        if (verifyInput == true) {
+            var username = $("input[name='username']").val();
+            var password = $("input[name='password']").val();
+            var repassword = $("input[name='repassword']").val(); 
+            if(password != repassword){
+                alert("两次输入的密码不一样，请重新输入!")
+            }else{
+                data = { 'userNo': username, 'passwd': password }
+                postRequest("/registerUser/", data, true, registerResult);
+            }
+        }else{
+            alert("要注册的用户名或密码不能为空!")
+        }      
+    }
+
+    function  registerResult(ret) {
+        if(ret['ret'] == true){
+            alert("恭喜注册新用户成功！")
+            userLogin();
+        }else{
+            alert("opps!注册新用户失败！")
+        }
     }
 
     function addHost(elem) {
@@ -229,10 +256,61 @@ function filterHostResult(ret) {
   </script>
   </head>
   <body>
-    <nav>你好，世界！
-        <button type="text" onclick="userLogin()" class="btn btn-link logout " style="float: right;font-size: 20px;color:black;">登录/注册？</button>
+    <nav style="display:flex">
+        <div style="flex: 1;" class="right-info">
+        <div class="container-fluid text-center text-md-left">
+            <div class="row">
+                <div class="col-md-8">
+                    <h5 class="text-uppercase">手机售后服务平台</h5>
+                    <p style="padding:10px 20px;">专业手机设备售后服务平台，通过整合线上线下相关资源，提供进口、国产等主流机型的专业售后工单服务。</p>
+                </div>
+                <div class="col-md-4" style="text-align: left;">
+                    <h5 class="text-uppercase">联系我们</h5>
+                    <ul class="list-unstyled" >
+                        <li>
+                            <a href="javascript:void(0);"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></a><span>2018年4月10号</span>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></a><span>18829298880</span>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></a><span>西安市金花南路5号理工大厦</span>
+                        </li>
+                    </ul>
+                </div>
+                </div>
+        </div>
+        </div>
+        <div style="width: 200px;" class="right-info">
+            <button type="text" onclick="userLogin()" class="btn btn-link logout " style="float: right;font-size: 20px;color:black;">登录/注册？</button>
+        
+        </div>
     </nav>
-    <div class="search">
+    <div class="content">
+        <div style="background-color:#337ab7;padding:20 0px;">
+        <ul class="nav nav-pills nav-justified">
+            <li role="presentation">
+                <a style="color:black;" href="#">首页</a>
+            </li>
+            <li role="presentation" >
+                <a style="color:black;" href="#">可维修手机</a>
+            </li>
+            <li role="presentation">
+                <a style="color:black;" href="#">客服人员</a>
+            </li>
+            <li role="presentation">
+                <a style="color:black;" href="#">关于我们</a>
+            </li>
+            <li role="presentation">
+                <a style="color:black;" href="#">加入我们</a>
+            </li>
+        </ul>
+        </div>
+        <div class="container">
+
+        </div>
+    </div>
+    <!--<div class="search">
     <input type="text" onfocus="enterSearch()" placeholder="搜索..." name="sinput" class="sinput">
     <input type="button" onclick="filterHost()" class="sbt" name="search" value="搜索">
 	</div>
@@ -243,7 +321,7 @@ function filterHostResult(ret) {
     </div>
     <div class="bottom-add">
         <button onclick="addHost(this)" class="new-host btn-fade" style="margin: auto 50px;">+</button>
-    </div>
+    </div>-->
     <script src="/static/js/jquery-1.12.4.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/ajax.js"></script>

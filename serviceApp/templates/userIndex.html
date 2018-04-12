@@ -11,21 +11,68 @@
 </head>
 
 <body>
-    <nav>你好，世界！
-        <button type="text" onclick="logout()" class="btn btn-link logout " style="float: right;font-size: 20px;color:black;">注销登录？</button>
+    <nav style="display:flex">
+        <div style="flex: 1;" class="right-info">
+            <div class="container-fluid text-center text-md-left">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5 class="text-uppercase">手机售后服务平台</h5>
+                        <p style="padding:10px 20px;">专业手机设备售后服务平台，通过整合线上线下相关资源，提供进口、国产等主流机型的专业售后工单服务。</p>
+                    </div>
+                    <div class="col-md-4" style="text-align: left;">
+                        <h5 class="text-uppercase">联系我们</h5>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#!">
+                                    <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                                </a>
+                                <span>2018年4月10号</span>
+                            </li>
+                            <li>
+                                <a href="#!">
+                                    <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                                </a>
+                                <span>18829298880</span>
+                            </li>
+                            <li>
+                                <a href="#!">
+                                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                                </a>
+                                <span>西安市金花南路5号理工大厦</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="width: 200px;" class="right-info">
+        <button type="text" onclick="logout()" class="btn btn-link logout " style="float: right;font-size: 20px;color:black;">注销登录？</button>               
+        </div>
     </nav>
-    <div class="search">
-        <input type="text" onfocus="enterSearch()" placeholder="搜索..." name="sinput" class="sinput">
-        <input type="button" onclick="filterHost()" class="sbt" name="search" value="搜索">
+    <div class="content">
+        <div style="background-color:#337ab7;padding:20 0px;">
+            <ul class="nav nav-pills nav-justified">
+                <li role="presentation">
+                    <a style="color:black;" href="#">首页</a>
+                </li>
+                <li role="presentation">
+                    <a style="color:black;" href="#">可维修手机</a>
+                </li>
+                <li role="presentation">
+                    <a style="color:black;" href="#">客服人员</a>
+                </li>
+                <li role="presentation">
+                    <a style="color:black;" href="#">关于我们</a>
+                </li>
+                <li role="presentation">
+                    <a style="color:black;" href="#">加入我们</a>
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+    
+        </div>
     </div>
-    <div class="container">
-        {% include 'host.html' %}
-        <div class="content-add">
-            <button onclick="addHost(this)" class="new-host btn-fade">+</button>
-        </div>
-        <div class="bottom-add">
-            <button onclick="addHost(this)" class="new-host btn-fade" style="margin: auto 50px;">+</button>
-        </div>
         <script src="/static/js/jquery-1.12.4.js"></script>
         <script src="/static/js/bootstrap.min.js"></script>
         <script src="/static/js/ajax.js"></script>

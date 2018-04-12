@@ -44,8 +44,8 @@ class DBMethods:
         return retData
 
     def updateMethods(self, dbStr):
-
         e = None
+        retData = None
         try:
             conn = self.connectMysql()
             cur=conn.cursor()

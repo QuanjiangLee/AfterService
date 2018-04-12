@@ -37,7 +37,7 @@ def verifyLogin(request):
         response = {'result':True, 'sessionId':sessionId, 'user_grant':user_grant}
         return HttpResponse(json.dumps(response), content_type='application/json;charset=utf-8')
     else:
-        response = {'result':False, 'error': "username or password is error!"}
+        response = {'result':False, 'error': "用户名或密码不正确!"}
         return HttpResponse(json.dumps(response), content_type='application/json;charset=utf-8')
 
 
@@ -61,6 +61,23 @@ def index(request):
         adminInfo = {'hello':'admin', "user_grant":'admin'}
         return render(request, 'adminIndex.html', {'adminInfo' : adminInfo})
 
+@csrf_exempt
+def registerUser(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode("utf-8"))
+    else:
+        return HttpResponse(json.dumps({'ret':False}), content_type='application/json;charset=utf-8')
+    try:
+        userNo = data['userNo']
+        passwd = data['passwd']
+        print(userNo, passwd)
+        if register_user(userNo,passwd):
+            return HttpResponse(json.dumps({'ret':True}), content_type='application/json;c:harset=utf-8')
+        else:
+            return HttpResponse(json.dumps({'ret':False}), content_type='application/json;charset=utf-8')
+    except Exception as err:
+        print(str(err))
+        return HttpResponse(json.dumps({'ret':False}), content_type='application/json;charset=utf-8')
 
 @csrf_exempt
 def addHost(request):
