@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Host maps</title>
+    <title>登录用户页面</title>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/index.css" rel="stylesheet">
 </head>
@@ -46,8 +46,11 @@
             </div>
         </div>
         <div style="width: 200px;" class="right-info">
-        <button type="text" onclick="logout()" class="btn btn-link logout " style="float: right;font-size: 20px;color:black;">注销登录？</button>               
+        <div style="float:right">
+        <span class="glyphicon glyphicon-log-out" style="padding: 6px 2px;" aria-hidden="true"></span>
+        <button type="text" onclick="logout()" class="btn btn-link logout " style="font-size: 20px;color:black;padding: 6px 2px;">注销登录？</button>               
         </div>
+    </div>
     </nav>
     <div class="content">
         <div style="background-color:#337ab7;padding:20 0px;">
@@ -56,16 +59,16 @@
                     <a style="color:black;" href="#">首页</a>
                 </li>
                 <li role="presentation">
-                    <a style="color:black;" href="#">可维修手机</a>
+                    <a style="color:black;" href="#">发起工单</a>
                 </li>
                 <li role="presentation">
-                    <a style="color:black;" href="#">客服人员</a>
+                    <a style="color:black;" href="#">工单状态</a>
                 </li>
                 <li role="presentation">
-                    <a style="color:black;" href="#">关于我们</a>
+                    <a style="color:black;" href="#">历史工单</a>
                 </li>
                 <li role="presentation">
-                    <a style="color:black;" href="#">加入我们</a>
+                    <a style="color:black;" href="#">个人资料</a>
                 </li>
             </ul>
         </div>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Host maps</title>
+    <title>游客用户页面</title>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/index.css" rel="stylesheet">
   <style type="text/css">
@@ -35,7 +35,7 @@
     function userLogin() {
     var html = ''
     html += '用户名:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="text" placeholder="用户名" name="username"><br>'
-    html += '密&emsp;码:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="password" box-shadow: none;border - radius: 2px;padding: 6px 10px;" placeholder="密码" name="password"><br>'
+    html += '密&emsp;码:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="password" placeholder="密码" name="password"><br>'
     html += '<input style="margin: 10px;" type="button" onclick="checkLogin()" class="sign-in-button btn btn-info" name="submit" value="登录"><input style="margin: 10px;" type="button" onclick="userRegister()" class="sign-in-button btn btn-info" name="regsiter" value="注册">'
     html += '<div class="rightTips"><a href="javascript:void(0);">忘记密码？</a></div></div>'
     title = '登录';
@@ -257,6 +257,10 @@ function filterHostResult(ret) {
   </head>
   <body>
     <nav style="display:flex">
+        <div style="width: 200px;padding: 20px;" class="right-info">
+            <button type="text" onclick="userRegister()" class="btn btn-info" style="float:right;color:white;margin-left: 20px;mar">注册？</button>
+            <button type="text" onclick="userLogin()" class="btn btn-primary" style="float: right;color:white;"><span class="glyphicon glyphicon-user" style="float:left;" aria-hidden="true"></span>登录</button>         
+        </div>
         <div style="flex: 1;" class="right-info">
         <div class="container-fluid text-center text-md-left">
             <div class="row">
@@ -281,10 +285,6 @@ function filterHostResult(ret) {
                 </div>
         </div>
         </div>
-        <div style="width: 200px;" class="right-info">
-            <button type="text" onclick="userLogin()" class="btn btn-link logout " style="float: right;font-size: 20px;color:black;">登录/注册？</button>
-        
-        </div>
     </nav>
     <div class="content">
         <div style="background-color:#337ab7;padding:20 0px;">
@@ -306,22 +306,34 @@ function filterHostResult(ret) {
             </li>
         </ul>
         </div>
-        <div class="container">
+        <div class="content-body">
+
+            <!--<div style="background: url(/static/image/home.jpeg) no-repeat;width:100%;height:400px;background-size:100% 100%;display:flex;" >
+                <button class="btn btn-info btn-lg" style="margin:auto;">了解更多</button>
+            </div>-->
+            <div class="phones-list" style="margin:20px;">
+            <div class="item">
+                <div class="item-nav" style="text-align:center;background-color:#f5f5f5">
+                    <span style="font-size: 20px;"> iphone 8x</span>
+                </div>
+                <div class="item-host">
+                    <img src="/static/image/home-bg.jpeg" width="100%" height="150px;">
+                    <ul class="item-li">
+                        <li>手机描述:
+                            <span class="hostName" style="font-size: 14px;">Hello, iphone 8x,It's beautiful!</span>
+                        </li>
+                        <li style="text-align:center;"><a>
+                            <span class=" glyphicon glyphicon-hand-right" style="color: rgb(212, 106, 64);" aria-hidden="true"></span><span contenteditable="false" class="hostName">发起工单</span></a>
+                        </li>
+                        </ul>
+                </div>
+            </div>
+            </div>
+
+            </div>
 
         </div>
     </div>
-    <!--<div class="search">
-    <input type="text" onfocus="enterSearch()" placeholder="搜索..." name="sinput" class="sinput">
-    <input type="button" onclick="filterHost()" class="sbt" name="search" value="搜索">
-	</div>
-    <div class="container">    	
-    {% include 'host.html' %}
-    <div  class="content-add">
-    <button onclick="addHost(this)" class="new-host btn-fade">+</button> 
-    </div>
-    <div class="bottom-add">
-        <button onclick="addHost(this)" class="new-host btn-fade" style="margin: auto 50px;">+</button>
-    </div>-->
     <script src="/static/js/jquery-1.12.4.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/ajax.js"></script>
