@@ -1,0 +1,32 @@
+{% extends extend %}
+{% block content %}
+<ul id="querySelf" class="list-group" style="height:150px;text-align: center;">
+    <li class="list-group-item">用户名：
+        <span id="partNum" contenteditable="false" style="width:200px;">admin</span>
+    </li>
+    <li class="list-group-item">性别：
+        <span id="jobNum" contenteditable="false" style="width:200px;">男</span>
+    </li>
+    <li class="list-group-item">评分：
+        <span id="macNum" contenteditable="false" style="width:200px;">90.9</span>
+    </li>
+    <li class="list-group-item">个性签名：
+        <span id="onlinestatus" contenteditable="false" style="width: 200px; color:salmon;font-size: 14px;">未在线!</span>
+    </li>
+    <li>
+        <div style="margin-top: 10px">
+            <input type="button" onclick="alterSubmit(this)" class="btn btn-success" value="提交">
+            <input type="button" onclick="alterAbort(this)" class="btn btn-info" onclick="" value="取消修改">
+
+        </div>
+    </li>
+</ul>
+<style>
+    .user-info {
+        border-bottom: 6px solid #39b58b;
+    }
+    .admin-info {
+        border-right: 6px solid #39b58b;
+    }
+</style>
+{% endblock %}

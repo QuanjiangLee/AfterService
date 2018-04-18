@@ -122,18 +122,18 @@
         </nav>
     <div class="aside">
         <ul class="list-group">
-            <li class="list-group-item list-aside" onclick="getProcessInfo()">
+            <li class="list-group-item list-aside phones-manage" onclick="window.location.href='/adminIndex/phones_list'">
                  手机管理
             </li>
-            <li class="list-group-item list-aside" onclick="getServiceLog()">
+            <li class="list-group-item list-aside admin-orders " onclick="window.location.href='/adminIndex/his_orders_list'">
                 <span class="label label-default label-pill pull-right" id='msgCount' style="position:absolute;right:25px;background-color:#2aad89">0</span>
                  工单管理
             </li>
-            <li class="list-group-item list-aside" onclick="getServiceLog()">
+            <li class="list-group-item list-aside orders-manage" onclick="window.location.href='/adminIndex/orders_manage'">
                 <span class="label label-default label-pill pull-right" id='msgCount' style="position:absolute;right:25px;background-color:#2aad89">0</span>
                  历史工单
             </li>
-            <li class="list-group-item list-aside" onclick="getServiceLog()">
+            <li class="list-group-item list-aside admin-info" onclick="window.location.href='/adminIndex/user_info'">
                  个人信息
             </li>
         </ul>
@@ -142,130 +142,8 @@
     <div style="margin-left: 230px;">
     <div style="height:90px;width:100%;margin-bottom:20px;"></div>
     <div class="content-info" style="height:500px;margin-right:10px;">
-        
-        <!--<table class="table">
-            <tbody>
-                <tr>
-                    <td>
-                        <span style="color: red">*</span>手机型号：</td>
-                    <td>
-                        <input type="text" placeholder="例如:iphone 8X" name="phoneName" style="height: 35px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;"
-                            autocomplete="off">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span style="color: red">*</span>手机图片:</td>
-                    <td>
-                        <a href="javascript:;" class="uploadfile btn btn-default" style="" id="choose">选择图文件
-                            <input type="file" name="choosefile">
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>手机描述信息:</td>
-                    <td>
-                        <textarea class="form-control" name="remark" id="remark" rows="5"></textarea>
-                    </td>
-                </tr>
-                <tr><td></td><td><input class="btn btn-info" type="submit" name="submit" value="提交" /></td></tr>
-            </tbody>
-        </table>-->
-        <!--<div class="item">
-            <div class="item-nav">
-                <button class="remove" onclick="delHost(this)" id="remove">×</button>
-                <div class="dropdown">
-                    <svg viewBox="0 0 24 24" class="svg-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <g>
-                            <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path>
-                        </g>
-                    </svg>
-                    <ul class="dropdown-menu">
-                        <li class="alter-host" onclick="alterHost(this)">
-                            <a href="javascript:void(0);">修改</a>
-                        </li>
-                        <li class="del-host" onclick="delHost(this)">
-                            <a href="javascript:void(0);">删除</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="item-host">
-                <span class="create-time">Example</span>
-            </div>-->
-            <!--<table class="table table-hover" style="table-layout:fixed;margin-top:20px; font-size:1.2em">
-                <thead>
-                    <th>工单用户</th>
-                    <th>手机类型</th>
-                    <th>工单标题</th>
-                    <th>工单信息</th>
-                    <th>工单状态</th>
-                    <th>工单操作</th>
-                </thead>
-                <tbody id='table-group'>
-                    <tr>
-                        <td>{{ data }}</td>
-                    </tr>
-                </tbody>
-            </table>-->
-            <ul id="querySelf" class="list-group" style="height:150px;text-align: center;">
-                <li class="list-group-item">用户名：
-                    <span id="partNum" style="width:200px;">admin</span>
-                </li>
-                <li class="list-group-item">性别：
-                    <span id="jobNum" style="width:200px;">男</span>
-                </li>
-                <li class="list-group-item">评分：
-                    <span id="macNum" style="width:200px;">90.9</span>
-                </li>
-                <li class="list-group-item">个性签名：
-                    <span id="onlinestatus" style="width: 200px; color:salmon;font-size: 14px;">未在线!</span>
-                </li>
-                <li>
-                    <div style="margin-top: 10px">
-                        <input type="button"  class="btn btn-success" value="提交">
-                        <input type="button" class="btn btn-info" onclick="" value="取消修改">
-                        
-                    </div>
-                </li>
-            </ul>
-           <!-- <div style="margin:auto;">
-            <div class="item">
-                <div class="item-nav">
-                    <div class="dropdown">
-                        <svg viewBox="0 0 24 24" class="svg-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            <g>
-                                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path>
-                            </g>
-                        </svg>
-                        <ul class="dropdown-menu">
-                            <li class="alter-host" onclick="alterHost(this)">
-                                <a href="javascript:void(0);">修改个人信息</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="item-host">
-                    <ul class="item-li">
-                        <li>用户名:
-                            <span contenteditable="false" class="hostName">{{ list.hostName }}</span>
-                        </li>
-                        <li>性别:
-                            <span contenteditable="false" class="hostIp">{{ list.IPAddress }}</span>
-                        </li>
-                        <li>个性签名:
-                            <span contenteditable="false" class="hostPort">{{ list.hostPort }}</span>
-                        </li>
-                    </ul>
-                    <div class="alter-info" style="display: none;">
-                        <button onclick="alterReset(this)" class="btn btn-info" name="reset">重置</button>
-                        <button onclick="alterSubmit(this)" class="btn btn-primary" name="submit">提交</button>
-                        <button onclick="alterAbort(this)" class="btn btn-warning">撤销</button>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>-->
+            {% block content %}
+            {% endblock %}
     </div>
 
     </div>

@@ -52,14 +52,89 @@ def userLoginOut(request):
 
 def index(request):
     if is_logined(request) is False:
-        cusInfo = {'hello':'unknow', "user_grant":"custom"}
-        return render(request, 'index.html',{'cusInfo':cusInfo})
+        #cusInfo = {'hello':'unknow', "user_grant":"custom"}
+        return redirect('/index/home/')
+        #return render(request, 'index.html',{'cusInfo':cusInfo})
     if is_logined(request) == 'user':
-        userInfo = {'hello':'user',"user_grant":'user'}
-        return render(request, 'userIndex.html', {'userInfo' : userInfo})
+        #userInfo = {'hello':'user',"user_grant":'user'}
+        return redirect('/userIndex/home/')
+        #return render(request, 'userIndex.html', {'userInfo' : userInfo})
     if is_logined(request) == 'admin':
-        adminInfo = {'hello':'admin', "user_grant":'admin'}
-        return render(request, 'adminIndex.html', {'adminInfo' : adminInfo})
+        #adminInfo = {'hello':'admin', "user_grant":'admin'}
+        return redirect('/adminIndex/home')
+        #return render(request, 'adminIndex.html', {'adminInfo' : adminInfo})
+
+def home(request):
+    user_grant = get_user_grant(request)
+    if user_grant == "user":
+        return render(request, 'home.html',{'extend': 'userIndex.html'})
+    elif user_grant == "admin":
+        return render(request, 'home.html',{'extend': 'adminIndex.html'})
+    else:
+        return redirect('/index/home/')
+
+def index_home(request):
+    return render(request, 'home.html',{'extend': 'index.html'})
+
+'''
+def redirect_to_user_home(request):
+    return render(request, 'home.html',{'extend': 'userIndex.html'})
+
+def redirect_to_admin_home(request):
+    return render(request, 'admin_phones.html',{'extend': 'adminIndex.html'})
+'''
+def about(request):
+    user_grant = get_user_grant(request)
+    if user_grant == "custom":
+        return render(request, 'about.html',{'extend': 'index.html'})
+    elif user_grant == "user":
+        return render(request, 'about.html',{'extend': 'userIndex.html'})
+    else:
+        return redirect('/index/home/')  
+
+
+def phones_list(request):
+    user_grant = get_user_grant(request)
+    if user_grant == "custom":
+        return render(request, 'phones_list.html',{'extend': 'index.html'})
+    elif user_grant == "user":
+        return render(request, 'phones_list.html',{'extend': 'userIndex.html'})
+    else:
+        return render(request, 'admin_phones.html',{'extend': 'adminIndex.html'}) 
+
+def servers_list(request):
+    user_grant = get_user_grant(request)
+    if user_grant == "custom":
+        return render(request, 'servers_list.html',{'extend': 'index.html'}) 
+    elif user_grant == "user":
+        return render(request, 'servers_list.html',{'extend': 'userIndex.html'})
+    else:
+        return render(request, 'servers_list.html',{'extend': 'index.html'})
+
+def orders_manage(request):
+    user_grant = get_user_grant(request)
+    if user_grant == "admin":
+        return render(request, 'admin_orders.html',{'extend': 'adminIndex.html'})
+    else:
+        return redirect('/index/home/')
+
+def his_orders_list(request):
+    user_grant = get_user_grant(request)
+    if user_grant == "user":
+        return render(request, 'user_orders.html',{'extend': 'userIndex.html'})
+    elif user_grant == "admin":
+        return render(request, 'user_orders.html',{'extend': 'adminIndex.html'})
+    else:
+        return redirect('/index/home/')
+
+def user_info(request):
+    user_grant = get_user_grant(request)
+    if user_grant == "user":
+        return render(request, 'user_info.html',{'extend': 'userIndex.html'})
+    elif user_grant == "admin":
+        return render(request, 'user_info.html',{'extend': 'adminIndex.html'})
+    else:
+        return redirect('/index/home/')
 
 @csrf_exempt
 def registerUser(request):

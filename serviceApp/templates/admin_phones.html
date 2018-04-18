@@ -1,0 +1,99 @@
+        <!--<table class="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <span style="color: red">*</span>手机型号：</td>
+                    <td>
+                        <input type="text" placeholder="例如:iphone 8X" name="phoneName" style="height: 35px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;"
+                            autocomplete="off">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span style="color: red">*</span>手机图片:</td>
+                    <td>
+                        <a href="javascript:;" class="uploadfile btn btn-default" style="" id="choose">选择图文件
+                            <input type="file" name="choosefile">
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>手机描述信息:</td>
+                    <td>
+                        <textarea class="form-control" name="remark" id="remark" rows="5"></textarea>
+                    </td>
+                </tr>
+                <tr><td></td><td><input class="btn btn-info" type="submit" name="submit" value="提交" /></td></tr>
+            </tbody>
+        </table>
+
+        <div class="item">
+            <div class="item-nav">
+                <button class="remove" onclick="delHost(this)" id="remove">×</button>
+                <div class="dropdown">
+                    <svg viewBox="0 0 24 24" class="svg-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <g>
+                            <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path>
+                        </g>
+                    </svg>
+                    <ul class="dropdown-menu">
+                        <li class="alter-host" onclick="alterHost(this)">
+                            <a href="javascript:void(0);">修改</a>
+                        </li>
+                        <li class="del-host" onclick="delHost(this)">
+                            <a href="javascript:void(0);">删除</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="item-host">
+                <span class="create-time">Example</span>
+            </div>-->
+{% extends 'adminIndex.html' %} 
+{% block content %}
+<div class="phones-list" style="margin:20px;">
+    <div class="item">
+        <div class="item-nav" style="text-align:center;background-color:#f5f5f5">
+            <button class="remove" onclick="delHost(this)" id="remove">×</button>
+            <div class="dropdown">
+                <svg viewBox="0 0 24 24" class="svg-more dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <g>
+                        <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path>
+                    </g>
+                </svg>
+                <ul class="dropdown-menu">
+                    <li class="alter-host" onclick="alterHost(this)">
+                        <a href="javascript:void(0);">修改</a>
+                    </li>
+                    <li class="del-host" onclick="delHost(this)">
+                        <a href="javascript:void(0);">删除</a>
+                    </li>
+                </ul>
+            </div>
+            <span style="font-size: 20px;"> iphone 8x</span>
+        </div>
+        <div class="item-host">
+            <img src="/static/image/home-bg.jpeg" width="100%" height="150px;">
+            <ul class="item-li">
+                <li>手机类型:
+                    <span class="hostName" style="font-size: 14px;">iphone 8x</span>
+                </li>
+                <li>手机描述:
+                    <span class="hostName" style="font-size: 14px;">Hello, iphone 8x,It's beautiful!</span>
+                </li>
+                <!--<li style="text-align:center;">
+                    <a>
+                        <span class=" glyphicon glyphicon-hand-right" style="color: rgb(212, 106, 64);" aria-hidden="true"></span>
+                        <span contenteditable="false" class="hostName">发起工单</span>
+                    </a>
+                </li>-->
+            </ul>
+        </div>
+    </div>
+</div>
+<style>
+    .phones-manage {
+        border-right: 6px solid #39b58b;
+    }
+</style>
+{% endblock %}

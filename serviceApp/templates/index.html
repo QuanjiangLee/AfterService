@@ -93,9 +93,9 @@
     function verifyResult(ret) {
         if (ret['result'] == true) {
             if (ret['user_grant'] == 0){
-                window.location.href = "/userIndex/" + ret['sessionId'];
+                window.location.href = "/userIndex/home";
             }else{
-            window.location.href = "/adminIndex/" + ret['sessionId'];
+            window.location.href = "/adminIndex/";
             }
         } else {
             alert(ret['error']);
@@ -289,51 +289,25 @@ function filterHostResult(ret) {
     <div class="content">
         <div style="background-color:#337ab7;padding:20 0px;">
         <ul class="nav nav-pills nav-justified">
-            <li role="presentation">
-                <a style="color:black;" href="#">首页</a>
+            <li role="presentation" class="page-info">
+                <a style="color:black;" href="/index/home">首页</a>
             </li>
-            <li role="presentation" >
-                <a style="color:black;" href="#">可维修手机</a>
+            <li role="presentation" class="phones-info" >
+                <a style="color:black;" href="/index/phones_list">服务手机</a>
             </li>
-            <li role="presentation">
-                <a style="color:black;" href="#">客服人员</a>
+            <li role="presentation" class="servers-info">
+                <a style="color:black;" href="/index/servers_list">客服人员</a>
             </li>
-            <li role="presentation">
-                <a style="color:black;" href="#">关于我们</a>
-            </li>
-            <li role="presentation">
-                <a style="color:black;" href="#">加入我们</a>
+            <li role="presentation" class="about-us">
+                <a style="color:black;" href="/index/about">关于我们</a>
             </li>
         </ul>
         </div>
         <div class="content-body">
-
-            <!--<div style="background: url(/static/image/home.jpeg) no-repeat;width:100%;height:400px;background-size:100% 100%;display:flex;" >
-                <button class="btn btn-info btn-lg" style="margin:auto;">了解更多</button>
-            </div>-->
-            <div class="phones-list" style="margin:20px;">
-            <div class="item">
-                <div class="item-nav" style="text-align:center;background-color:#f5f5f5">
-                    <span style="font-size: 20px;"> iphone 8x</span>
-                </div>
-                <div class="item-host">
-                    <img src="/static/image/home-bg.jpeg" width="100%" height="150px;">
-                    <ul class="item-li">
-                        <li>手机描述:
-                            <span class="hostName" style="font-size: 14px;">Hello, iphone 8x,It's beautiful!</span>
-                        </li>
-                        <li style="text-align:center;"><a>
-                            <span class=" glyphicon glyphicon-hand-right" style="color: rgb(212, 106, 64);" aria-hidden="true"></span><span contenteditable="false" class="hostName">发起工单</span></a>
-                        </li>
-                        </ul>
-                </div>
+             {% block content %} 
+             {% endblock %}
             </div>
-            </div>
-
-            </div>
-
         </div>
-    </div>
     <script src="/static/js/jquery-1.12.4.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/ajax.js"></script>

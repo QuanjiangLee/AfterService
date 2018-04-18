@@ -26,6 +26,18 @@ def is_logined(request):
         return 'user' 
     return False
 
+def get_user_grant(request):
+    user_grant = {}
+    if is_logined(request) is False:
+        user_grant = "custom"
+    elif is_logined(request) == 'user':
+        user_grant = "user"
+    elif is_logined(request) == 'admin':
+        user_grant = "admin"
+    else:
+        user_grant = "custom"
+    return user_grant
+
 def register_user(userNo, passwd, user_sex="男"):
     values = (userNo, passwd,user_sex)
     dbStr = "insert into serviceApp_userinf (user_name,user_grant, user_sex, user_passwd) values('{0}',0,'{2}',password('{1}'));"

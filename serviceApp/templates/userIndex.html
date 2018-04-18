@@ -55,25 +55,29 @@
     <div class="content">
         <div style="background-color:#337ab7;padding:20 0px;">
             <ul class="nav nav-pills nav-justified">
-                <li role="presentation">
-                    <a style="color:black;" href="#">首页</a>
+                <li role="presentation" class="page-info">
+                    <a style="color:black;" href="/userIndex/home/">首页</a>
                 </li>
-                <li role="presentation">
-                    <a style="color:black;" href="#">发起工单</a>
+                <li role="presentation" class="phones-info">
+                    <a style="color:black;" href="/userIndex/phones_list/">服务手机</a>
                 </li>
-                <li role="presentation">
-                    <a style="color:black;" href="#">工单状态</a>
+                <li role="presentation" class="servers-info">
+                    <a style="color:black;" href="/userIndex/servers_list/">客服人员</a>
                 </li>
-                <li role="presentation">
-                    <a style="color:black;" href="#">历史工单</a>
+                <li role="presentation" class="user-orders">
+                    <a style="color:black;" href="/userIndex/his_orders_list/">历史工单</a>
                 </li>
-                <li role="presentation">
-                    <a style="color:black;" href="#">个人资料</a>
+                <li role="presentation" class="user-info">
+                    <a style="color:black;" href="/userIndex/user_info/">个人资料</a>
+                </li>
+                <li role="presentation" class="about-us">
+                    <a style="color:black;" href="/userIndex/about/">关于我们</a>
                 </li>
             </ul>
         </div>
-        <div class="container">
-    
+        <div class="content-body">
+             {% block content %} 
+             {% endblock %}
         </div>
     </div>
         <script src="/static/js/jquery-1.12.4.js"></script>
