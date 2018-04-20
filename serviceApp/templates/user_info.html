@@ -1,22 +1,25 @@
 {% extends extend %}
 {% block content %}
-<ul id="querySelf" class="list-group" style="height:150px;text-align: center;">
-    <li class="list-group-item">用户名：
-        <span id="partNum" contenteditable="false" style="width:200px;">admin</span>
+<div>
+    <span class="glyphicon glyphicon-edit btn btn-link" style="color:#337ab7;" onclick="alter_userinf()" aria-hidden="true">修改个人资料</span>
+</div>
+<ul id="self-inf" class="list-group" style="height:150px;text-align: left;">
+    <li class="list-group-item">&emsp;用户名：
+        <span id="userName" contenteditable="false" style="width:200px;">admin</span>
     </li>
-    <li class="list-group-item">性别：
-        <span id="jobNum" contenteditable="false" style="width:200px;">男</span>
-    </li>
-    <li class="list-group-item">评分：
-        <span id="macNum" contenteditable="false" style="width:200px;">90.9</span>
+    <li class="list-group-item">&emsp;&emsp;性别：
+        <span id="userSex" contenteditable="false" style="width:200px;">男</span>
     </li>
     <li class="list-group-item">个性签名：
-        <span id="onlinestatus" contenteditable="false" style="width: 200px; color:salmon;font-size: 14px;">未在线!</span>
+        <span id="userMark" contenteditable="false" style="width: 200px; color:salmon;">未在线!</span>
+    </li>
+    <li class="list-group-item">&emsp;&emsp;评分：
+        <span id="userGrades" contenteditable="false" style="width:200px;">90.9</span>
     </li>
     <li>
-        <div style="margin-top: 10px">
+        <div class="alter-menu" style="margin-top: 20px;text-align: center; display:none;" >
             <input type="button" onclick="alterSubmit(this)" class="btn btn-success" value="提交">
-            <input type="button" onclick="alterAbort(this)" class="btn btn-info" onclick="" value="取消修改">
+            <input type="button" onclick="alterAbort()" class="btn btn-info" onclick="" value="取消修改">
 
         </div>
     </li>
@@ -29,4 +32,26 @@
         border-right: 6px solid #39b58b;
     }
 </style>
+<script>
+function alter_userinf() {
+    var items = $("#self-inf>.list-group-item>span")
+        items.addClass("span-edit");
+        items.attr("contenteditable", "true");
+        $("#userGrades").attr("contenteditable", "false");
+        $("#userGrades").removeClass("span-edit");
+        $(".alter-menu").css("display", "block");
+    }
+
+function alterSubmit(elem) {
+    var userName = $("#userName").text();
+    var userSex = $("#userSex").text();
+    var userMark = $("#userMark").text();
+    var data = {"userName": userName, "userSex": userSex, "userMark": userMark}
+    //postRequest
+}
+
+function alterAbort(){
+    location.reload()
+}
+</script>
 {% endblock %}

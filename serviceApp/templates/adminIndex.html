@@ -93,6 +93,14 @@
     color: #004974;
     text-decoration: none;
 }
+
+.content-info {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    	display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+}
     </style>
 </head>
 
@@ -103,10 +111,10 @@
             <div class="col-md-3">
                 <span>手机售后服务管理平台</span>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-9" style="margin-bottom:15px;">
                         <span class="glyphicon glyphicon-log-out" style="float:right; padding: 6px 2px;" aria-hidden="true"></span>
                         <button type="text" onclick="logout()" class="btn btn-link logout " style="float: right;font-size: 20px;padding:6px 2px">注销登录？</button>
-                <div class="top">
+                <!--<div class="top">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <a href="#" class="nav-link">手机添加</a>
@@ -115,7 +123,7 @@
                             <a href="#" class="nav-link">手机列表</a>
                         </li>
                     </ul>
-                </div>
+                </div>-->
             </div>
             </div>
             </div>
@@ -141,7 +149,7 @@
     </div>
     <div style="margin-left: 230px;">
     <div style="height:90px;width:100%;margin-bottom:20px;"></div>
-    <div class="content-info" style="height:500px;margin-right:10px;">
+    <div class="content-info" style="margin-right:10px;">
             {% block content %}
             {% endblock %}
     </div>

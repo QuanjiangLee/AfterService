@@ -69,7 +69,7 @@ def home(request):
     if user_grant == "user":
         return render(request, 'home.html',{'extend': 'userIndex.html'})
     elif user_grant == "admin":
-        return render(request, 'home.html',{'extend': 'adminIndex.html'})
+        return render(request, 'admin_phones.html',{'extend': 'adminIndex.html'})
     else:
         return redirect('/index/home/')
 
