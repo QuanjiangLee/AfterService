@@ -39,10 +39,28 @@ def get_user_grant(request):
     return user_grant
 
 def register_user(userNo, passwd, user_sex="男"):
-    values = (userNo, passwd,user_sex)
+    values = (userNo, passwd, user_sex)
     dbStr = "insert into serviceApp_userinf (user_name,user_grant, user_sex, user_passwd) values('{0}',0,'{2}',password('{1}'));"
     dbStr = dbStr.format( *values )
     print(dbStr)
     db = DBMethods()
     ret = db.updateMethods(dbStr)
+    return ret
+
+def admin_add_phones(phoneName, fileName, phoneDesp, login_user):
+    values = (phoneName, fileName, phoneDesp, login_user)
+    dbStr = "insert into serviceApp_phonesinf (phone_name, image_path, phone_details, admin_id_id) values ('{0}','{1}','{2}', {3});"
+    dbStr = dbStr.format( *values )
+    print(dbStr)
+    db = DBMethods()
+    ret = db.updateMethods(dbStr)
+    return ret
+
+def get_user_id(userName):
+    values = (userName, )
+    dbStr = "select user_id from serviceApp_userinf where user_name='{0}';"
+    dbStr = dbStr.format( *values )
+    print(dbStr)
+    db = DBMethods()
+    ret = db.selectMethods(dbStr)
     return ret

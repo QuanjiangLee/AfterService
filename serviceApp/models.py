@@ -8,7 +8,8 @@ class userInf(models.Model):
     user_name = models.CharField(max_length = 30)
     user_grant = models.BooleanField(default=False) 
     user_sex = models.CharField(max_length = 5)
-    user_image = models.ImageField(upload_to = 'pic_folder/', default = 'pic_folder/no-img.jpg')
+    user_mask = models.CharField(max_length=100)
+    image_path = models.CharField(max_length = 255)
     user_grades = models.FloatField(default=0.0)
     user_passwd = models.CharField(max_length=100)
     def __str__(self):
@@ -17,11 +18,11 @@ class userInf(models.Model):
 class phonesInf(models.Model):
     phone_id = models.AutoField(primary_key=True, null=False)
     admin_id = models.ForeignKey(userInf,on_delete=models.DO_NOTHING) 
-    phone_type = models.CharField(max_length = 30)
-    phone_image = models.ImageField(upload_to = 'pic_folder/', default = 'pic_folder/no-img.jpg')
+    phone_name = models.CharField(max_length = 30)
+    image_path = models.CharField(max_length = 255)
     phone_details = models.TextField() 
     def __str__(self):
-        return self.phone_type
+        return self.phone_name
 
 class workOrders(models.Model):
     order_id = models.AutoField(primary_key=True, null=False)
@@ -49,7 +50,7 @@ class gradesInf(models.Model):
 class aboutInf(models.Model):
     admin_id = models.ForeignKey(userInf, on_delete=models.DO_NOTHING)
     about_title = models.CharField(max_length = 30)
-    about_image = models.ImageField(upload_to = 'pic_folder/', default = 'pic_folder/no-img.jpg')
+    image_path = models.CharField(max_length = 255)
     about_content = models.TextField()
     def __str__(self):
         return self.user_title

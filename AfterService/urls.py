@@ -36,8 +36,11 @@ urlpatterns = [
     url(r'^userIndex/his_orders_list/$', views.his_orders_list),
     url(r'^adminIndex/his_orders_list/$', views.his_orders_list),
     url(r'^userIndex/user_info/$', views.user_info),
-    url(r'^adminIndex/user_info/$', views.user_info),    
+    url(r'^adminIndex/user_info/$', views.user_info),   
+    url(r'^adminIndex/admin_update_phones/$', views.admin_update_phones), 
+    url(r'^adminIndex/del_phone_item/$', views.del_phone_item),
     url(r'^index/about/$', views.about),
     url(r'^userIndex/about/$', views.about),
     url(r'^registerUser/', views.registerUser),
+    url(r'^alert_user_info/', views.alert_user_info),
 ]

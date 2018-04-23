@@ -5,16 +5,16 @@
 </div>
 <ul id="self-inf" class="list-group" style="height:150px;text-align: left;">
     <li class="list-group-item">&emsp;用户名：
-        <span id="userName" contenteditable="false" style="width:200px;">admin</span>
+        <span id="userName" contenteditable="false" style="width:200px;">{{ user_info.user_name }}</span>
     </li>
     <li class="list-group-item">&emsp;&emsp;性别：
-        <span id="userSex" contenteditable="false" style="width:200px;">男</span>
+        <span id="userSex" contenteditable="false" style="width:200px;">{{ user_info.user_sex }}</span>
     </li>
     <li class="list-group-item">个性签名：
-        <span id="userMark" contenteditable="false" style="width: 200px; color:salmon;">未在线!</span>
+        <span id="userMark" contenteditable="false" style="width: 200px; color:salmon;">{{ user_info.user_mask }}</span>
     </li>
     <li class="list-group-item">&emsp;&emsp;评分：
-        <span id="userGrades" contenteditable="false" style="width:200px;">90.9</span>
+        <span id="userGrades" contenteditable="false" style="width:200px;">{{ user_info.user_grades }}</span>
     </li>
     <li>
         <div class="alter-menu" style="margin-top: 20px;text-align: center; display:none;" >
@@ -48,6 +48,17 @@ function alterSubmit(elem) {
     var userMark = $("#userMark").text();
     var data = {"userName": userName, "userSex": userSex, "userMark": userMark}
     //postRequest
+    postRequest("/alert_user_info/", data, true, alert_user_ret);
+}
+
+function alert_user_ret(ret){
+    if(ret == true){
+        alert("修改个人信息成功!");
+        location.reload()
+    }else{
+        alert("修改个人信息失败!");
+        location.reload()
+    }
 }
 
 function alterAbort(){

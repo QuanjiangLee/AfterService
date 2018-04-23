@@ -144,6 +144,14 @@
         bottom: 30px;
         overflow: hidden;
     }
+
+    .content-info {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    	display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+}
     /*.title-bar{
         height: 160px;
         background-color: #109def;

@@ -94,13 +94,6 @@
     text-decoration: none;
 }
 
-.content-info {
-        margin-top: 20px;
-        margin-bottom: 20px;
-    	display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-}
     </style>
 </head>
 
@@ -160,6 +153,8 @@
         <script src="/static/js/bootstrap.min.js"></script>
         <script src="/static/js/ajax.js"></script>
         <script src="/static/js/text-utils.js"></script>
+        <script src="/static/js/index.js"></script>
+        <script src="/static/js/ajaxfileupload.js"></script>
         <script>
         function logout() {
                 postRequest("/userLoginOut/", {}, false, logoutResult);

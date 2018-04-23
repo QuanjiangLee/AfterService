@@ -1,7 +1,8 @@
 {% extends 'adminIndex.html' %} 
 {% block content %}
-<div class="phones-list" style="">
-    <div class="item">
+{% for item in items %}
+<div class="phones-list" style="" >
+    <div class="item" phone-id={{ item.phone_id }}>
         <div class="item-nav" style="">
             <button class="remove" onclick="delItem(this)" id="remove">×</button>
             <div class="dropdown">
@@ -22,16 +23,16 @@
                     </li>
                 </ul>
             </div>
-            <span style="font-size: 20px;"> iphone 8x</span>
+            <span style="font-size: 20px;">{{ item.phone_name }}</span>
         </div>
         <div class="item-host">
-            <img src="/static/image/home-bg.jpeg" width="100%" height="200px;">
+            <img src="/static/pic_folder/{{item.image_path}}" width="100%" height="200px;">
             <ul class="item-li">
                 <li>手机类型:
-                    <span class="phoneName" style="">iphone 8x</span>
+                    <span class="phoneName" style="">{{ item.phone_name }}</span>
                 </li>
                 <li>手机描述:
-                    <span class="phoneDesp" style="">Hello, iphone 8x,It's beautiful!</span>
+                    <span class="phoneDesp" style="">{{ item.phone_details }}</span>
                 </li>
             </ul>
         </div>
@@ -42,6 +43,7 @@
         </div>
     </div>
 </div>
+{% endfor %}
     <div class="bottom-add">
         <button onclick="addItem(this)" class="new-host btn-fade" style="margin: auto 50px;">+</button>
     </div>
@@ -57,7 +59,7 @@ function addItem(elem) {
         html += '<button class="remove" onclick="removeItem(this)">×</button></div>';
         html += '<div class="item-content"><ul class="item-li">';
         html += '<li class="li-add">手机型号:<span contenteditable="true" class="phoneName span-edit"></span></li>';
-        html += '<li class="li-add">手机图片:<a href="javascript:;" class="uploadfile btn btn-default" style="" id="chooseFile">选择图文件<input type="file" name="choosefile"></a></li>';
+        html += '<li class="li-add">手机图片:<a href="javascript:;" class="uploadfile btn btn-default" style="" >选择图文件<input type="file" id="choosefile" name="choosefile"></a></li>';
         html += '<li class="li-add">手机描述信息:<span contenteditable="true" class="phoneDesp span-edit"></span></li>';
         html += '</ul><div class="alter-info">';
         html += '<button onclick="addItemSubmit(this)" class="btn btn-primary" name="submit">提交</button>';
@@ -69,10 +71,12 @@ function addItem(elem) {
     }
 
 function alterItem(elem) {
-    var item = $(elem).parents(".item").children().eq(1).children(".item-li").find("li");
+    var html = '<li class="li-add">新手机图片：<a href="javascript:;" class="uploadfile btn btn-default" style="" >选择图文件<input type="file" id="alterfile" name="choosefile"></a></li>';
+    var item = $(elem).parents(".item").children().eq(1).children(".item-li");
     var itemBtn = $(elem).parents(".item").children(".alter-info");
-    item.children("span").addClass("span-edit");
-    item.children("span").attr("contenteditable", "true");
+    item.find('li').children("span").addClass("span-edit");
+    item.find('li').children("span").attr("contenteditable", "true");
+    item.append(html);
     itemBtn.css("display", "flex");
 }
 
@@ -83,30 +87,109 @@ function removeItem(elem) {
 function alterReset(elem) {
     var items = $(elem).parent().parent().find(".item-li span");
     items.text("");
+    $('#choosefile').val("");
 }
+
 function alterAbort(elem) {
     location.reload()
+}
+
+function alterSubmit(elem) {
+    var item = $(elem).parents(".item").find(".item-host");
+    var phoneName = item.find(".phoneName").text();
+    var phoneDesp = item.find(".phoneDesp").text();
+    var phoneId = $(elem).parents(".item").attr("phone-id");
+    var suffixIndex = $("#alterfile").val().lastIndexOf(".");
+    var suffix = $("#alterfile").val().substring(suffixIndex + 1).toUpperCase();
+    /*alert(phoneName);
+    alert(phoneDesp);
+    alert(phoneId)
+    alert(suffix);*/
+    if (suffix){
+        if (suffix != "BMP" && suffix != "JPG" && suffix != "JPEG" && suffix != "PNG" && suffix != "GIF") {
+            alert("请选择一个图片格式的文件!", false, []);
+            return;
+        }
+    }
+    data = { 'phoneName': phoneName, 'phoneDesp': phoneDesp, 'phoneId': phoneId, 'type': 'alter'}
+    phones_manage('/adminIndex/admin_update_phones/', 'alterfile', data, phones_alter_ret);
+}
+
+function  phones_alter_ret(ret){
+    if(ret){
+        if(ret['ret'] == true){
+            alert("修改手机信息成功!");
+            location.reload()
+        }else{
+            alert("修改手机信息失败!");
+            location.reload()
+        }
+    }   
 }
 
 function delItem(elem) {
     //comfirm to delete host?
     var reply = confirm("您确认要删除吗?")
     if (reply == true) {
-        var hostId = $(elem).parents(".item").attr("data-tid");
-        //alert(hostId);
-        data = { 'hostId': hostId }
-        postRequest("/delHost/", data, true, delHostResult);
+        var phoneId = $(elem).parents(".item").attr("phone-id");
+        alert(phoneId);
+        data = { 'phoneId': phoneId }
+        postRequest("/adminIndex/del_phone_item/", data, true, delHostResult);
     } else {
         alert("你取消了删除操作!")
     }
 }
 function delHostResult(ret) {
     if (ret['ret'] == true) {
-        alert("删除主机信息成功!");
+        alert("删除手机信息成功!");
         location.reload()
     } else {
-        alert("删除主机信息失败!");
+        alert("删除手机信息失败!");
     }
 }
+
+function addItemSubmit(elem){
+    var item = $(elem).parents(".item-content");
+    var phoneName = item.find(".phoneName").text();
+    var phoneDesp = item.find(".phoneDesp").text();
+    var suffixIndex = $("#choosefile").val().lastIndexOf(".");
+    var suffix = $("#choosefile").val().substring(suffixIndex + 1).toUpperCase();
+    /*alert(phoneName);
+    alert(phoneDesp);
+    alert(suffix);*/
+    if (suffix != "BMP" && suffix != "JPG" && suffix != "JPEG" && suffix != "PNG" && suffix != "GIF") {
+        alert("请选择一个图片格式的文件!", false, []);
+        return;
+    }
+    data = {'phoneName': phoneName, 'phoneDesp': phoneDesp, 'type':'add'}
+    phones_manage('/adminIndex/admin_update_phones/', 'choosefile', data, phones_add_ret);
+}
+
+function phones_add_ret(ret){
+    if (ret == true) {
+        alert("添加手机成功！")
+        location.reload();
+    }else{
+        alert("添加手机失败！")
+        location.reload();     
+    }
+}
+
+function phones_manage(url, fileElementId,data, func) {  
+        $.ajaxFileUpload({
+            url: url, //用于文件上传的服务器端请求地址
+            secureuri: false, //是否需要安全协议，一般设置为false
+            fileElementId: fileElementId, //文件上传域的ID
+            dataType: 'json', //返回值类型 一般设置为json
+            data: data,
+            success: function (ret)  //服务器成功响应处理函数
+            {
+                if (func != false) {
+                    func(ret);
+                }
+            }
+        })
+    }
+
 </script>
 {% endblock %}

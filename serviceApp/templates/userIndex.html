@@ -75,7 +75,7 @@
                 </li>
             </ul>
         </div>
-        <div class="content-body">
+        <div class="content-info" style="">
              {% block content %} 
              {% endblock %}
         </div>
@@ -84,6 +84,7 @@
         <script src="/static/js/bootstrap.min.js"></script>
         <script src="/static/js/ajax.js"></script>
         <script src="/static/js/text-utils.js"></script>
+        <script src="/static/js/index.js"></script>
         <script>
             function logout() {
                 postRequest("/userLoginOut/", {}, false, logoutResult);
