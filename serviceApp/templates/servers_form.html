@@ -1,0 +1,40 @@
+    <label>工单标题：</label>
+    <input style="height: 35px;margin: 10px 0px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="text" placeholder="请输入工单标题" name="order-title"/>
+    <br>
+    <label>工单内容：</label>
+    <textarea class="form-control" style="margin: 10px 0px;" name="order-details"  rows="5" placeholder="请输入工单详细内容"></textarea>
+    <div class="alter-info" style=" text-align:center;">
+    <button onclick="orderReset()" class="btn btn-info" name="reset">重置</button>
+    <button onclick="orderSubmit()" class="btn btn-primary" name="submit">提交</button>
+    </div>
+<style>
+    .bootstrap-dialog-message {
+        text-align: left;
+    }
+</style>
+<script>
+    function orderReset(){
+        $("input[name='order-title']").val('');
+        $("textarea[name='order-details']").val('');
+    }
+    function orderSubmit(){
+        var phone_id = $('#phone-id').text();
+        var server_id = $('#server-id').text();
+        var order_title = $("input[name='order-title']").val();
+        var order_details= $("textarea[name='order-details']").val();
+        alert(phone_id)
+        alert(server_id)
+        alert(order_title)
+        alert(order_details)
+        data = { 'phone_id': phone_id, 'server_id': server_id, 'order_title': order_title, 'order_details': order_details };
+        postRequest("/addorderlist/", data, true, addOrderResult);
+    }
+    function addOrderResult(ret) {
+        if (ret == true){
+            $(".Dialog").remove();
+            alert("工单申请成功，请耐心等候客服人员回应！");
+        }else{
+            alert("工单申请失败，请稍后重试！")
+        }
+    }
+</script>

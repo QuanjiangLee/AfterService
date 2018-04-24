@@ -43,4 +43,6 @@ urlpatterns = [
     url(r'^userIndex/about/$', views.about),
     url(r'^registerUser/', views.registerUser),
     url(r'^alert_user_info/', views.alert_user_info),
+    url(r'^get_servers_form/', views.get_servers_form),
+    url(r'^addorderlist/', views.addorderlist),
 ]

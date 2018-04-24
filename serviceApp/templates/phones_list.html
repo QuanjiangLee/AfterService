@@ -17,9 +17,9 @@
                     <span class="phone-details" >{{ item.phone_details }}</span>
                 </li>
                 <li style="text-align:center;">
-                    <a>
+                    <a href="javascript:void(0);">
                         <span class=" glyphicon glyphicon-hand-right" style="color: rgb(212, 106, 64);" aria-hidden="true"></span>
-                        <span contenteditable="false" class="startService">发起工单</span>
+                        <span contenteditable="false" class="startService" onclick="startService(this)">发起工单</span>
                     </a>
                 </li>
             </ul>
@@ -32,4 +32,21 @@
         border-bottom: 6px solid #39b58b;
     }
 </style>
+<script>
+    function startService(elem) {
+        var html = ""
+        var phone_id = $(elem).parents(".item").attr("phone-id");
+        var phoneName = $(elem).parents(".item").find(".phoneName").text()
+        var serversInfo = httpGet("/userIndex/servers_list/?type=html");
+        html += "<h3>您已选择手机类型：<span id='phone-name'>" + phoneName + "</span></h3>"
+        html += "<h5>请选择客服人员：</h5>" 
+        html += serversInfo;
+        var title = "发起工单"
+        html += "<span id='phone-id' style='display:none;'>" + phone_id + "</span>";
+        var title = "发起工单"
+        dialogAlert(title, html);
+        $(".bootstrap-dialog-message").css("height", "500px");
+        $(".bootstrap-dialog-message").css("overflow", "scroll");
+    }   
+</script>
 {% endblock %}

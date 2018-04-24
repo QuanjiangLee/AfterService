@@ -40,7 +40,7 @@ def get_user_grant(request):
 
 def register_user(userNo, passwd, user_sex="男"):
     values = (userNo, passwd, user_sex)
-    dbStr = "insert into serviceApp_userinf (user_name,user_grant, user_sex, user_passwd) values('{0}',0,'{2}',password('{1}'));"
+    dbStr = "insert into serviceApp_userinf (user_name,user_grant, user_sex, user_mask, user_passwd) values('{0}',0,'{2}','这个家伙很懒！', password('{1}'));"
     dbStr = dbStr.format( *values )
     print(dbStr)
     db = DBMethods()

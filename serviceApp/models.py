@@ -6,6 +6,7 @@ from django.db import models
 class userInf(models.Model):
     user_id = models.AutoField(primary_key=True, null=False)
     user_name = models.CharField(max_length = 30)
+    user_nickname = models.CharField(max_length = 30)
     user_grant = models.BooleanField(default=False) 
     user_sex = models.CharField(max_length = 5)
     user_mask = models.CharField(max_length=100)
@@ -26,12 +27,13 @@ class phonesInf(models.Model):
 
 class workOrders(models.Model):
     order_id = models.AutoField(primary_key=True, null=False)
-    user_id = models.ForeignKey(userInf, on_delete=models.DO_NOTHING)
+    user_id = models.ForeignKey(userInf,related_name='User_id', on_delete=models.DO_NOTHING)
+    server_id = models.ForeignKey(userInf,on_delete=models.DO_NOTHING)
     phone_id = models.ForeignKey(phonesInf, on_delete=models.DO_NOTHING)
     order_title = models.CharField(max_length = 30)
     order_details = models.CharField(max_length = 255)
     order_status = models.BooleanField(default=False)
-    order_grade = models.FloatField()
+    order_grade = models.FloatField(default='0.0')
     order_time = models.DateTimeField(auto_now_add = True)
     
     class Meta:  #按时间下降排序

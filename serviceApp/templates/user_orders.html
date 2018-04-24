@@ -10,9 +10,20 @@
         <th>工单操作</th>
     </thead>
     <tbody id='table-group'>
+        {% for list in lists %}
         <tr>
-            <td>{{ data }}</td>
+            <td>{{ list.user_id }}</td>
+            <td>{{ list.phone_id }}</td>
+            <td>{{ list.order_title }}</td>
+            <td>{{ list.order_details }}</td>
+            {% if not list.order_status %}
+            <td>正在进行...</td>
+            <td><span class="btn btn-link">工单回复</span><span class="btn btn-link">工单关闭</span></td>
+            {% else %}
+            <td><span class="btn btn-link">查看工单详情</span></td>
+            {% endif %}          
         </tr>
+        {% endfor %}
     </tbody>
 </table>
 <style>

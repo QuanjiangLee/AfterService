@@ -115,11 +115,16 @@ def phones_list(request):
         return render(request, 'admin_phones.html',{'extend': 'adminIndex.html', 'items':items}) 
 
 def servers_list(request):
+    if request.GET.get('type') == "html":
+        items = userInf.objects.all()
+        return render(request, 'select_servers_list.html',{'items':items})
     user_grant = get_user_grant(request)
     if user_grant == "custom":
-        return render(request, 'servers_list.html',{'extend': 'index.html'}) 
+        items = userInf.objects.all().filter(user_grant=1)
+        return render(request, 'servers_list.html',{'extend': 'index.html','items':items}) 
     elif user_grant == "user":
-        return render(request, 'servers_list.html',{'extend': 'userIndex.html'})
+        items = userInf.objects.all().filter(user_grant=1)
+        return render(request, 'servers_list.html',{'extend': 'userIndex.html','items':items})
     else:
         return render(request, 'servers_list.html',{'extend': 'index.html'})
 
@@ -130,10 +135,27 @@ def orders_manage(request):
     else:
         return redirect('/index/home/')
 
+def get_servers_form(request):
+    return render(request, 'servers_form.html')
+
 def his_orders_list(request):
     user_grant = get_user_grant(request)
     if user_grant == "user":
-        return render(request, 'user_orders.html',{'extend': 'userIndex.html'})
+        login_user=request.session.get('login_user',None)
+        user=userInf.objects.get(user_name=login_user)
+        lists = workOrders.objects.filter(user_id=user)
+        #print(user,lists)
+        '''
+        orderList = []
+        for list in lists:
+            orderList.append({})
+            print(list.user_id)
+            print(list.phone_id)
+            user_name = login_user
+            
+            phone_name = phonesInf.objects.get(phone_id=int(list.phone_id))
+        '''
+        return render(request, 'user_orders.html',{'extend': 'userIndex.html', 'lists':lists})
     elif user_grant == "admin":
         return render(request, 'user_orders.html',{'extend': 'adminIndex.html'})
     else:
@@ -242,6 +264,29 @@ def alert_user_info(request):
     except Exception as err:
         print(str(err))
         return HttpResponse(json.dumps(False), content_type='application/json;charset=utf-8')
+
+@csrf_exempt
+def addorderlist(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode("utf-8"))
+    else:
+        return HttpResponse(json.dumps(False), content_type='application/json;charset=utf-8')
+    try:
+        login_user=request.session.get('login_user',None)
+        user = userInf.objects.get(user_name=login_user)
+        phone_id = data['phone_id']
+        server_id = data['server_id']
+        order_title = data['order_title']
+        order_details = data['order_details']
+        server = userInf.objects.get(user_id=server_id)
+        phone = phonesInf.objects.get(phone_id=phone_id)
+        workOrders.objects.create(user_id=user, server_id=server, phone_id=phone, order_title=order_title, order_details=order_details)
+    except Exception as e:
+        print(e)
+        return HttpResponse(json.dumps(False), content_type='application/json;charset=utf-8')
+    else:
+        return HttpResponse(json.dumps(True), content_type='application/json;charset=utf-8')
+    
 
 @csrf_exempt
 def addHost(request):
