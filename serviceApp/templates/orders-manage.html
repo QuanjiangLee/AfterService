@@ -11,21 +11,21 @@
         <th>工单标题</th>
         <th>工单信息</th>
         <th>工单时间</th>
-        <th>工单详情</th>
+        <th>工单操作</th>
     </thead>
     <tbody id='table-group'>
         {% for list in lists %}
         <tr>
          {% if user_grant == 'user' %}
-        <td>
-            <span data-html='true' data-toggle='popover' data-trigger='hover' data-containter='body' data-placement='top' data-content='{{ list.user_id }}'
-                data-original-title="" title="">{{ list.server_id }}</span>
-        </td>
+            <td>
+                <span data-html='true' data-toggle='popover' data-trigger='hover' data-containter='body' data-placement='top' data-content='{{ list.user_id }}'
+                    data-original-title="" title="">{{ list.server_id }}</span>
+            </td>
         {% elif user_grant == 'admin' %}
-        <td>
-            <span data-html='true' data-toggle='popover' data-trigger='hover' data-containter='body' data-placement='top' data-content='{{ list.user_id }}'
-                data-original-title="" title="">{{ list.user_id }}</span>
-        </td>
+            <td>
+                <span data-html='true' data-toggle='popover' data-trigger='hover' data-containter='body' data-placement='top' data-content='{{ list.user_id }}'
+                    data-original-title="" title="">{{ list.user_id }}</span>
+            </td>
         {% endif %}
             <td>
                 <span data-html='true' data-toggle='popover' data-trigger='hover' data-containter='body' data-placement='top' data-content='{{ list.phone_id }}'
@@ -43,23 +43,44 @@
                 <span data-html='true' data-toggle='popover' data-trigger='hover' data-containter='body' data-placement='top' data-content='{{ list.order_time }}'
                     data-original-title="" title="">{{ list.order_time }}</span>
             </td>
-            <td><button class="btn btn-link" style="padding:0px;">查看详情</button></td>
+            <td>
+                <button class="btn btn-link" style="padding:0px;">工单回复</button>
+                <button order-id={{ list.order_id }} class="btn btn-link" style="padding:0px;" onclick="order_close(this)">工单关闭</button>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 <style>
-    .user-orders {
-        border-bottom: 6px solid #39b58b;
-    }
-
-    .admin-orders-his {
+        .admin-orders {
         border-right: 6px solid #39b58b;
+    }
+    .orders-manage {
+        border-bottom: 6px solid #39b58b;
     }
 </style>
 <script>
     (function () {
         $("span[data-trigger='hover']").popover();
     })()
+    function order_close(elem){
+        var reply = confirm("您确认要关闭此工单吗?")
+        if (reply == true) {
+        var order_id = $(elem).attr('order-id')
+        alert(order_id) 
+        postRequest("/order_close/", {'order_id': order_id}, true, order_close_ret);
+        }else{
+            alert("你取消了关闭工单操作!")
+        }
+    }
+    function order_close_ret(ret) {
+        if (ret == true) {
+            alert("关闭工单成功!");
+            location.reload()
+        }else {
+            alert("关闭工单失败！");
+            location.reload()
+        }
+    }
 </script>
 {% endblock %}

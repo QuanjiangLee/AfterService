@@ -15,7 +15,11 @@
                 <li style="text-align:center;">
                     <a href="javascript:void(0);">
                         <span class=" glyphicon glyphicon-hand-right" style="color: rgb(212, 106, 64);" aria-hidden="true"></span>
+                        {% if user_grant == 'custom' %}
+                        <span contenteditable="false" class="startLogin" onclick=userLogin()>发起工单</span>
+                        {% else %}
                         <span contenteditable="false" class="startService" onclick=startService(this)>发起工单</span>
+                        {% endif %}
                     </a>
                 </li>
             </ul>

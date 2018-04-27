@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^index/servers_list/$', views.servers_list),
     url(r'^userIndex/servers_list/$', views.servers_list),
     url(r'^adminIndex/orders_manage/$', views.orders_manage),
+    url(r'^userIndex/orders_manage/$', views.orders_manage),
     url(r'^userIndex/his_orders_list/$', views.his_orders_list),
     url(r'^adminIndex/his_orders_list/$', views.his_orders_list),
     url(r'^userIndex/user_info/$', views.user_info),
@@ -45,4 +46,5 @@ urlpatterns = [
     url(r'^alert_user_info/', views.alert_user_info),
     url(r'^get_servers_form/', views.get_servers_form),
     url(r'^addorderlist/', views.addorderlist),
+    url(r'^order_close/', views.order_close),
 ]

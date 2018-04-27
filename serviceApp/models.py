@@ -41,11 +41,26 @@ class workOrders(models.Model):
     def __str__(self):
     	return self.order_title
 
+class commitDetails(models.Model):
+    commit_id = models.ForeignKey(workOrders, on_delete=models.DO_NOTHING)
+    commit_details = models.CharField(max_length = 255)
+    commit_status = models.BooleanField(default=False)
+    commit_time = models.DateTimeField(auto_now_add = True)
+    
+    class Meta:  #按时间下降排序
+        ordering = ['-commit_time']
+    def __str__(self):
+    	return self.commit_details
+
+
 class gradesInf(models.Model):
-    user_id = models.ForeignKey(userInf, on_delete=models.DO_NOTHING)
+    grade_id = models.ForeignKey(workOrders,related_name='Order_id', on_delete=models.DO_NOTHING)
+    user_id = models.ForeignKey(workOrders,related_name='User_id', on_delete=models.DO_NOTHING)
+    server_id = models.ForeignKey(workOrders, on_delete=models.DO_NOTHING)
     user_grade = models.FloatField()
     user_message =  models.TextField()
     ava_grade = models.FloatField()
+    grade_time = models.DateTimeField(auto_now_add = True)
     def __str__(self):
         return self.user_message
 
@@ -55,7 +70,7 @@ class aboutInf(models.Model):
     image_path = models.CharField(max_length = 255)
     about_content = models.TextField()
     def __str__(self):
-        return self.user_title
+        return self.about_title
 
     
 
