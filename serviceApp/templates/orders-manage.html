@@ -44,7 +44,7 @@
                     data-original-title="" title="">{{ list.order_time }}</span>
             </td>
             <td>
-                <button class="btn btn-link" style="padding:0px;">工单回复</button>
+                <button order-id={{ list.order_id }} class="btn btn-link" style="padding:0px;" onclick="order_commit(this)">工单回复</button>
                 <button order-id={{ list.order_id }} class="btn btn-link" style="padding:0px;" onclick="order_close(this)">工单关闭</button>
             </td>
         </tr>
@@ -82,5 +82,18 @@
             location.reload()
         }
     }
+        function order_commit(elem) {
+            var html = ""
+            var order_id = $(elem).attr('order-id')
+            var commitInfo = httpGet("/commit_html/");
+            /*html += "<h3>您已选择手机类型：<span id='phone-name'>" + phoneName + "</span></h3>"
+            html += "<h5>请选择客服人员：</h5>"*/
+            html += serversInfo;
+            //html += "<span id='phone-id' style='display:none;'>" + phone_id + "</span>";
+            var title = "回复工单"
+            dialogAlert(title, html);
+            $(".bootstrap-dialog-message").css("height", "500px");
+            $(".bootstrap-dialog-message").css("overflow", "scroll");
+        }
 </script>
 {% endblock %}

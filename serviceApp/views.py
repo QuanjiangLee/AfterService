@@ -73,7 +73,9 @@ def home(request):
     if user_grant == "user":
         return render(request, 'home.html',{'extend': 'userIndex.html'})
     elif user_grant == "admin":
-        items = phonesInf.objects.all()
+        login_user=request.session.get('login_user',None)
+        admin_id = userInf.objects.filter(user_name=login_user).first()
+        items = phonesInf.objects.filter(admin_id=admin_id)
         return render(request, 'admin_phones.html',{'extend': 'adminIndex.html', 'items':items})
     else:
         return redirect('/index/home/')
@@ -111,7 +113,9 @@ def phones_list(request):
         items = phonesInf.objects.all()
         return render(request, 'phones_list.html',{'extend': 'userIndex.html','items':items})
     else:
-        items = phonesInf.objects.all()
+        login_user=request.session.get('login_user',None)
+        admin_id = userInf.objects.filter(user_name=login_user).first()
+        items = phonesInf.objects.filter(admin_id=admin_id)
         return render(request, 'admin_phones.html',{'extend': 'adminIndex.html', 'items':items}) 
 
 def servers_list(request):
@@ -125,8 +129,6 @@ def servers_list(request):
     elif user_grant == "user":
         items = userInf.objects.all().filter(user_grant=1)
         return render(request, 'servers_list.html',{'extend': 'userIndex.html','items':items})
-    else:
-        return render(request, 'servers_list.html',{'extend': 'index.html'})
 
 def orders_manage(request):
     user_grant = get_user_grant(request)
@@ -137,8 +139,10 @@ def orders_manage(request):
         return render(request, 'orders-manage.html',{'extend': 'userIndex.html','lists':lists, 'user_grant': user_grant}) 
     elif user_grant == "admin":
         login_user=request.session.get('login_user',None)
-        user=userInf.objects.get(user_name=login_user)
+        user=userInf.objects.filter(user_name=login_user).first()
+        print(user)
         lists = workOrders.objects.filter(server_id=user, order_status=0)
+        print(lists)
         return render(request, 'orders-manage.html',{'extend': 'adminIndex.html','lists':lists, 'user_grant': user_grant})
     else:
         return redirect('/index/home/')
@@ -148,6 +152,7 @@ def get_servers_form(request):
 
 def his_orders_list(request):
     user_grant = get_user_grant(request)
+    print(user_grant)
     if user_grant == "user":
         login_user=request.session.get('login_user',None)
         user=userInf.objects.get(user_name=login_user)
