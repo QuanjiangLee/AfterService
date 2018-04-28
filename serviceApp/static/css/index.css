@@ -160,6 +160,10 @@
     padding: 10px;
     cursor:pointer;
 }
+nav>li:focus, .nav>li:hover {
+    text-decoration: none;
+    background-color: #eee;
+}
     /*.title-bar{
         height: 160px;
         background-color: #109def;
