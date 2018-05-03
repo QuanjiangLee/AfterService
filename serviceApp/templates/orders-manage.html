@@ -85,15 +85,19 @@
         function order_commit(elem) {
             var html = ""
             var order_id = $(elem).attr('order-id')
+            var commit_to = $(elem).parents("tr").children("td:eq(0)").children("span").text();
+            /*alert(order_id)
+            alert(commit_to)*/
             var commitInfo = httpGet("/commit_html/");
-            /*html += "<h3>您已选择手机类型：<span id='phone-name'>" + phoneName + "</span></h3>"
-            html += "<h5>请选择客服人员：</h5>"*/
-            html += serversInfo;
-            //html += "<span id='phone-id' style='display:none;'>" + phone_id + "</span>";
+            html += "<h5>回复订单信息：</h5>";
+            html += commitInfo;
+            html += "<span id='order_id' style='display:none;'>" + order_id + "</span>"
+            html += "<span id='commit_to' style='display:none;'>" + commit_to + "</span>";
             var title = "回复工单"
             dialogAlert(title, html);
             $(".bootstrap-dialog-message").css("height", "500px");
             $(".bootstrap-dialog-message").css("overflow", "scroll");
+            $(".bootstrap-dialog-message").css("text-align", "left");
         }
 </script>
 {% endblock %}

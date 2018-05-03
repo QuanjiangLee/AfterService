@@ -1,3 +1,4 @@
 *.pyc
 serviceApp/config/*
 serviceApp/migrations/*
+serviceApp/static/pic_folder/*

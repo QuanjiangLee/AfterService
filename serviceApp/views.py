@@ -150,6 +150,9 @@ def orders_manage(request):
 def get_servers_form(request):
     return render(request, 'servers_form.html')
 
+def get_commit_html(request):
+    return render(request, 'commit_html.html')
+
 def his_orders_list(request):
     user_grant = get_user_grant(request)
     print(user_grant)
@@ -212,6 +215,7 @@ def admin_update_phones(request):
     print(type)
     
     file_path = os.path.join(BASE_DIR, UPLOAD_PATH)
+    print(file_path)
     if file_data: 
         if not os.path.exists(file_path):
             os.mkdir(file_path)

@@ -9,11 +9,13 @@
     </div>
 </div>
 {% endfor %}
+<div class="reply-input">
 <label>回复内容：</label>
 <textarea class="form-control" style="margin: 10px 0px;" name="order-details" rows="5" placeholder="请输入工单详细内容"></textarea>
 <div class="alter-info" style=" text-align:center;">
     <button onclick="commitReset()" class="btn btn-info" name="reset">重置</button>
     <button onclick="commitSubmit()" class="btn btn-primary" name="submit">提交</button>
+</div>
 </div>
 <script>
         function commitReset() {
@@ -24,10 +26,10 @@
             var server_id = $('#server-id').text();
             var order_title = $("input[name='order-title']").val();
             var order_details = $("textarea[name='order-details']").val();
-            alert(phone_id)
+            /*alert(phone_id)
             alert(server_id)
             alert(order_title)
-            alert(order_details)
+            alert(order_details)*/
             data = { 'phone_id': phone_id, 'server_id': server_id, 'order_title': order_title, 'order_details': order_details };
             postRequest("/addorderlist/", data, true, commitResult);
         }

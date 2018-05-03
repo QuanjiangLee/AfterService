@@ -47,4 +47,5 @@ urlpatterns = [
     url(r'^get_servers_form/', views.get_servers_form),
     url(r'^addorderlist/', views.addorderlist),
     url(r'^order_close/', views.order_close),
+    url(r'^commit_html/', views.get_commit_html),
 ]
