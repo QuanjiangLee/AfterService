@@ -48,4 +48,8 @@ urlpatterns = [
     url(r'^addorderlist/', views.addorderlist),
     url(r'^order_close/', views.order_close),
     url(r'^commit_html/', views.get_commit_html),
+    url(r'^commitorder/', views.commitorder),
+    url(r'^get_order_ma_count/', views.get_order_ma_count),
+    url(r'^get_order_his_count/', views.get_order_his_count),
+    url(r'^get_login_user/', views.get_login_user),
 ]

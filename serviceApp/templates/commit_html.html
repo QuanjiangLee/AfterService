@@ -1,44 +1,50 @@
-
+<label style="font-size:1.2em;margin-bottom:15px;">工单标题：&nbsp;{{ commit_title }}</label><br>
 {% for commit in commits %}
-<div class="panel panel-default">
+<div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title">{{ commit.from }}回复{{ commit.to }} </h3>
+        <h3 class="panel-title">{{ commit.commit_from }}&nbsp;<span style="color:black">回复</span>&nbsp;{{ commit.commit_to }} </h3>
     </div>
     <div class="panel-body">
-        {{ commit.details }}
+        <p>{{ commit.commit_details }}</p>
+        <span style="float: right;">回复时间： {{ commit.commit_time }}</span>
+
     </div>
 </div>
 {% endfor %}
+{% if order_type == 'details' %}
+<label style="font-size:1.2em;">工单状态：&nbsp;<span style="color:red">已关闭！</span></lable>
+{% else %}
 <div class="reply-input">
 <label>回复内容：</label>
-<textarea class="form-control" style="margin: 10px 0px;" name="order-details" rows="5" placeholder="请输入工单详细内容"></textarea>
+<textarea class="form-control" style="margin: 10px 0px;" name="order-details" rows="5" placeholder="请输入工单回复详细内容"></textarea>
 <div class="alter-info" style=" text-align:center;">
     <button onclick="commitReset()" class="btn btn-info" name="reset">重置</button>
     <button onclick="commitSubmit()" class="btn btn-primary" name="submit">提交</button>
 </div>
 </div>
+<span style="float: right;" class="btn btn-link" onclick="order_close()">关闭工单？</span>
+{% endif %}
 <script>
         function commitReset() {
             $("textarea[name='order-details']").val('');
         }
         function commitSubmit() {
-            var phone_id = $('#phone-id').text();
-            var server_id = $('#server-id').text();
-            var order_title = $("input[name='order-title']").val();
+            var order_id = $('#order_id').text();
+            var commit_to = $('#commit_to').text();
             var order_details = $("textarea[name='order-details']").val();
             /*alert(phone_id)
             alert(server_id)
             alert(order_title)
             alert(order_details)*/
-            data = { 'phone_id': phone_id, 'server_id': server_id, 'order_title': order_title, 'order_details': order_details };
-            postRequest("/addorderlist/", data, true, commitResult);
+            data = { 'order_id': order_id, 'commit_to': commit_to, 'order_details': order_details };
+            postRequest("/commitorder/", data, true, commitResult);
         }
         function commitResult(ret) {
             if (ret == true) {
                 $(".Dialog").remove();
-                alert("工单申请成功，请耐心等候客服人员回应！");
+                alert("工单回复成功，请耐心等待回复！");
             } else {
-                alert("工单申请失败，请稍后重试！")
+                alert("工单申回复失败，请稍后重试！")
             }
         }
 </script>

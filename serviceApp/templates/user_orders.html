@@ -43,7 +43,7 @@
                 <span data-html='true' data-toggle='popover' data-trigger='hover' data-containter='body' data-placement='top' data-content='{{ list.order_time }}'
                     data-original-title="" title="">{{ list.order_time }}</span>
             </td>
-            <td><button class="btn btn-link" style="padding:0px;">查看详情</button></td>
+            <td><button order-id={{ list.order_id}} class="btn btn-link" style="padding:0px;" onclick="order_details(this)">查看详情</button></td>
         </tr>
         {% endfor %}
     </tbody>
@@ -61,5 +61,16 @@
     (function () {
         $("span[data-trigger='hover']").popover();
     })()
+    function order_details(elem) {
+            var html = ""
+            var order_id = $(elem).attr('order-id')
+            var commitInfo = httpGet("/commit_html/?order_id=" + order_id + "&order_type=details");
+            html += commitInfo;
+            var title = "查看工单详情"
+            dialogAlert(title, html);
+            $(".bootstrap-dialog-message").css("height", "500px");
+            $(".bootstrap-dialog-message").css("overflow", "scroll");
+            $(".bootstrap-dialog-message").css("text-align", "left");
+        }
 </script>
 {% endblock %}

@@ -26,8 +26,10 @@
                 <span>手机售后服务管理平台</span>
             </div>
             <div class="col-md-9" style="margin-bottom:15px;">
-                        <span class="glyphicon glyphicon-log-out" style="float:right; padding: 6px 2px;" aria-hidden="true"></span>
-                        <button type="text" onclick="logout()" class="btn btn-link logout " style="float: right;font-size: 20px;padding:6px 2px">注销登录？</button>
+                        <button type="text" onclick="logout()" class="btn btn-link logout " style="float: right;font-size: 20px;padding:6px 2px">注销登录？<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></button>
+                        <span style="padding: 6px 10px;float:right;">欢迎您!
+                            <span id='login_user'>login User</span>
+                        </span>
                 <!--<div class="top">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
@@ -48,11 +50,11 @@
                  手机管理
             </li>
             <li class="list-group-item list-aside admin-orders " onclick="window.location.href='/adminIndex/orders_manage'">
-                <span class="label label-default label-pill pull-right" id='msgCount' style="position:absolute;right:25px;background-color:#2aad89">0</span>
+                <span class="label label-default label-pill pull-right" id='order_ma_count' style="position:absolute;right:25px;">0</span>
                  工单管理
             </li>
             <li class="list-group-item list-aside admin-orders-his" onclick="window.location.href='/adminIndex/his_orders_list'">
-                <span class="label label-default label-pill pull-right" id='msgCount' style="position:absolute;right:25px;background-color:#2aad89">0</span>
+                <span class="label label-default label-pill pull-right" id='order_his_count' style="position:absolute;right:25px;">0</span>
                  历史工单
             </li>
             <li class="list-group-item list-aside admin-info" onclick="window.location.href='/adminIndex/user_info'">
@@ -70,6 +72,35 @@
 
     </div>
         <script>
+        (function () {
+            get_login_user()
+            get_order_ma_count();
+            get_order_his_count();
+        })()
+        function get_order_ma_count(){
+            postRequest("/get_order_ma_count/", {}, true, get_order_ma_count_ret);
+        }
+        function get_order_ma_count_ret(ret) {
+            if (ret) {
+                $("#order_ma_count").text(ret['count'])
+            }
+        }
+        function get_order_his_count(){
+            postRequest("/get_order_his_count/", {}, true, get_order_his_count_ret);
+        }
+        function get_order_his_count_ret(ret) {
+            if(ret){
+                $("#order_his_count").text(ret['count'])
+            }
+        }
+        function get_login_user() {
+            postRequest("/get_login_user/", {}, true, get_login_user_ret);
+        }
+        function get_login_user_ret(ret) {
+            if (ret) {
+                $("#login_user").text(ret['login_user']);
+            }
+        }
         function logout() {
                 postRequest("/userLoginOut/", {}, false, logoutResult);
             }

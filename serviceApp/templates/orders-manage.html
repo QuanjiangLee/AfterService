@@ -44,8 +44,8 @@
                     data-original-title="" title="">{{ list.order_time }}</span>
             </td>
             <td>
-                <button order-id={{ list.order_id }} class="btn btn-link" style="padding:0px;" onclick="order_commit(this)">工单回复</button>
-                <button order-id={{ list.order_id }} class="btn btn-link" style="padding:0px;" onclick="order_close(this)">工单关闭</button>
+                <button order-id={{ list.order_id }} id="close_id" class="btn btn-link" style="padding:0px;" onclick="order_commit(this)">工单回复</button>
+                <button order-id={{ list.order_id }} class="btn btn-link" style="padding:0px;" onclick="order_close()">工单关闭</button>
             </td>
         </tr>
         {% endfor %}
@@ -63,10 +63,10 @@
     (function () {
         $("span[data-trigger='hover']").popover();
     })()
-    function order_close(elem){
+    function order_close(){
         var reply = confirm("您确认要关闭此工单吗?")
         if (reply == true) {
-        var order_id = $(elem).attr('order-id')
+        var order_id = $("#close_id").attr('order-id')
         alert(order_id) 
         postRequest("/order_close/", {'order_id': order_id}, true, order_close_ret);
         }else{
@@ -88,8 +88,7 @@
             var commit_to = $(elem).parents("tr").children("td:eq(0)").children("span").text();
             /*alert(order_id)
             alert(commit_to)*/
-            var commitInfo = httpGet("/commit_html/");
-            html += "<h5>回复订单信息：</h5>";
+            var commitInfo = httpGet("/commit_html/?order_id="+order_id+"");
             html += commitInfo;
             html += "<span id='order_id' style='display:none;'>" + order_id + "</span>"
             html += "<span id='commit_to' style='display:none;'>" + commit_to + "</span>";
@@ -98,6 +97,6 @@
             $(".bootstrap-dialog-message").css("height", "500px");
             $(".bootstrap-dialog-message").css("overflow", "scroll");
             $(".bootstrap-dialog-message").css("text-align", "left");
-        }
+        } 
 </script>
 {% endblock %}

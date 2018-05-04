@@ -151,7 +151,21 @@ def get_servers_form(request):
     return render(request, 'servers_form.html')
 
 def get_commit_html(request):
-    return render(request, 'commit_html.html')
+    if request.method == "GET":
+        order_id = request.GET.get('order_id',"")
+        order_type = request.GET.get('order_type',"")
+        print(order_type)
+        if order_id:
+            order = workOrders.objects.get(order_id=order_id)
+            commit_title = order.order_title
+            print(commit_title)
+            commits = commitDetails.objects.all().filter(commit_id=order)
+            if order_type:
+                return render(request, 'commit_html.html',{'commits':commits, 'commit_title': commit_title, 'order_type':order_type})
+            else:
+                return render(request, 'commit_html.html',{'commits':commits, 'commit_title': commit_title})
+        else:
+            return render(request, 'commit_html.html')
 
 def his_orders_list(request):
     user_grant = get_user_grant(request)
@@ -298,6 +312,27 @@ def addorderlist(request):
 
 
 @csrf_exempt
+def commitorder(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode("utf-8"))
+    else:
+        return HttpResponse(json.dumps(False), content_type='application/json;charset=utf-8')
+    try:
+        order_id = data['order_id']
+        commit_to_user = data['commit_to']
+        commit_details = data['order_details']
+        order = workOrders.objects.get(order_id=order_id)
+        commit_to = userInf.objects.get(user_name=commit_to_user)
+        login_user=request.session.get('login_user',None)
+        commit_from = userInf.objects.get(user_name=login_user)
+        commitDetails.objects.create(commit_id=order, commit_from = commit_from, commit_to = commit_to, commit_details=commit_details)
+    except Exception as e:
+        print(e)
+        return HttpResponse(json.dumps(False), content_type='application/json;charset=utf-8')
+    else:
+        return HttpResponse(json.dumps(True), content_type='application/json;charset=utf-8')
+
+@csrf_exempt
 def order_close(request):    
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
@@ -312,6 +347,27 @@ def order_close(request):
     else:
         return HttpResponse(json.dumps(True), content_type='application/json;charset=utf-8')
 
+@csrf_exempt
+def get_order_ma_count(request):
+    admin_user=request.session.get('login_user',None)
+    server_id = userInf.objects.get(user_name=admin_user)
+    count = workOrders.objects.filter(server_id=server_id,order_status=False).count()
+    return HttpResponse(json.dumps({"count": count}), content_type='application/json;charset=utf-8')
+
+@csrf_exempt
+def get_order_his_count(request):
+    admin_user=request.session.get('login_user',None)
+    server_id = userInf.objects.get(user_name=admin_user)
+    count = workOrders.objects.filter(server_id=server_id,order_status=True).count()
+    return HttpResponse(json.dumps({"count": count}), content_type='application/json;charset=utf-8')
+
+@csrf_exempt
+def get_login_user(request):
+    login_user = request.session.get('login_user',None)
+    if login_user:
+        return HttpResponse(json.dumps({"login_user": login_user}), content_type='application/json;charset=utf-8')
+    else:
+        return HttpResponse(json.dumps({"login_user": None}), content_type='application/json;charset=utf-8')
 
 @csrf_exempt
 def addHost(request):

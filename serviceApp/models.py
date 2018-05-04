@@ -50,7 +50,7 @@ class commitDetails(models.Model):
     commit_time = models.DateTimeField(auto_now_add = True)
     
     class Meta:  #按时间下降排序
-        ordering = ['-commit_time']
+        ordering = ['commit_time']
     def __str__(self):
     	return self.commit_details
 

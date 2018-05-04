@@ -50,10 +50,14 @@
                 </div>
             </div>
         </div>
-        <div style="width: 200px;" class="right-info">
+        <div style="width: 200px;padding:3px 15px" class="right-info">
         <div style="float:right">
-        <span class="glyphicon glyphicon-log-out" style="padding: 6px 2px;" aria-hidden="true"></span>
-        <button type="text" onclick="logout()" class="btn btn-link logout " style="font-size: 20px;color:black;padding: 6px 2px;">注销登录？</button>               
+            <button type="text" onclick="logout()" class="btn btn-link logout " style="float: right;font-size: 20px;padding:6px 2px">注销登录？
+                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+            </button>
+            <span style="padding: 6px 10px;float:right;">欢迎您!
+                <span id='login_user'>login User</span>
+            </span>              
         </div>
     </div>
     </nav>
@@ -83,14 +87,25 @@
                 </li>
             </ul>
         </div>
-        <div class="content-info" style="">
+        <div class="content-info" style="margin-top:0px;">
              {% block content %} 
              {% endblock %}
         </div>
     </div>
         <script>
+            (function(){
+                get_login_user();
+            })()
+            function get_login_user() {
+                postRequest("/get_login_user/", {}, true, get_login_user_ret);
+            }
+            function get_login_user_ret(ret){
+                if(ret){
+                    $("#login_user").text(ret['login_user']);
+                }
+            }
             function logout() {
-                postRequest("/userLoginOut/", {}, false, logoutResult);
+                postRequest("/userLoginOut/", {}, true, logoutResult);
             }
             function logoutResult(ret) {
                 if (ret['ret'] == true) {
