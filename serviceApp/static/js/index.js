@@ -15,8 +15,8 @@ function dialogAlert(title, content) {
 
 function userLogin() {
     var html = ''
-    html += '用户名:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="text" placeholder="用户名" name="username"><br>'
-    html += '密&emsp;码:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="password" placeholder="密码" name="password"><br>'
+    html += '用户ID:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="text" placeholder="请输入用户ID" name="username"><br>'
+    html += '密&emsp;码:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="password" placeholder="请输入密码" name="password"><br>'
     html += '<input style="margin: 10px;" type="button" onclick="checkLogin()" class="sign-in-button btn btn-info" name="submit" value="登录"><input style="margin: 10px;" type="button" onclick="userRegister()" class="sign-in-button btn btn-info" name="regsiter" value="注册">'
     html += '<div class="rightTips"><a href="javascript:void(0);">忘记密码？</a></div></div>'
     title = '登录';
@@ -25,9 +25,9 @@ function userLogin() {
 
 function userRegister() {
     var html = ''
-    html += '&emsp;用户名:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="text" placeholder="用户名" name="username"><br>'
-    html += '&emsp;&emsp;密码:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="password" box-shadow: none;border - radius: 2px;padding: 6px 10px;" placeholder="密码" name="password"><br>'
-    html += '重复密码:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="password" box-shadow: none;border - radius: 2px;padding: 6px 10px;" placeholder="重复密码" name="repassword"><br>'
+    html += '&emsp;用户ID:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="text" placeholder="输入注册用户ID" name="username"><br>'
+    html += '&emsp;&emsp;密码:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="password" box-shadow: none;border - radius: 2px;padding: 6px 10px;" placeholder="输入注册密码" name="password"><br>'
+    html += '重复密码:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="password" box-shadow: none;border - radius: 2px;padding: 6px 10px;" placeholder="重复注册密码" name="repassword"><br>'
     html += '<input style="margin: 10px;" type="button" onclick="registerUser(this)" class="sign-in-button btn btn-info" name="submit" value="注册">'
     html += '<div class="rightTips" onclick="userLogin()"><a href="javascript:void(0);">返回登录？</a></div></div>'
     title = '注册';

@@ -279,7 +279,7 @@ def alert_user_info(request):
         print(userName, userSex, userMark)
         login_user=request.session.get('login_user',None)
         user_id = get_user_id(login_user)[0][0]
-        ret = userInf.objects.filter(user_id=user_id).update(user_name=userName,user_sex=userSex, user_mask=userMark)
+        ret = userInf.objects.filter(user_id=user_id).update(user_nickname=userName,user_sex=userSex, user_mask=userMark)
         if ret > 0:
             return HttpResponse(json.dumps(True), content_type='application/json;charset=utf-8')
         else:
@@ -363,7 +363,8 @@ def get_order_his_count(request):
 
 @csrf_exempt
 def get_login_user(request):
-    login_user = request.session.get('login_user',None)
+    cur_user = request.session.get('login_user',None)
+    login_user = userInf.objects.get(user_name=cur_user).user_nickname
     if login_user:
         return HttpResponse(json.dumps({"login_user": login_user}), content_type='application/json;charset=utf-8')
     else:
