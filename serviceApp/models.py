@@ -74,7 +74,35 @@ class aboutInf(models.Model):
     def __str__(self):
         return self.about_title
 
+
     
+class carParts(models.Model):
+    partId = models.AutoField(primary_key=True, null=False)
+    personId = models.ForeignKey(userInf,related_name='admin_user',  on_delete=models.DO_NOTHING)
+    partName = models.CharField(max_length = 40)
+    partNumber = models.IntegerField()
+    partType = models.CharField(max_length = 10)
+    partSize = models.CharField(max_length = 40)
+    partPrice = models.FloatField()
+    partDate = models.DateTimeField(auto_now_add = True)  
+    def __str__(self):
+        return self.partName
 
-
-
+class repairInfo(models.Model):
+    repairId = models.AutoField(primary_key=True, null=False)
+    repairName = models.CharField(max_length = 40)
+    totalPrice = models.FloatField()
+    repairDetails = models.CharField(max_length = 255)
+    partDetails = models.CharField(max_length = 255)
+    repairDate = models.DateTimeField(auto_now_add = True)
+    personId = models.ForeignKey(userInf,related_name='repair_user',  on_delete=models.DO_NOTHING)
+    def __str__(self):
+        return self.repairName
+'''
+class repairDetails(models.Model):
+    detailsId = models.ForeignKey(repairInfo,related_name='repair_id',  on_delete=models.DO_NOTHING)
+    detailPartId = models.ForeignKey(carParts,related_name='part_id',  on_delete=models.DO_NOTHING)
+    partName = models.CharField(max_length = 40)
+    partNum = models.IntegerField()
+    sigleTotalPrice = models.FloatField()
+'''
