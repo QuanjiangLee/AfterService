@@ -1,6 +1,7 @@
 {% extends extend %} 
 {% block content %}
-<table class="table table-hover" style="table-layout:fixed;margin-top:20px; font-size:1.2em">
+<div style="width: 100%;margin:20px 30px;padding:1px;border:0.2px solid #5bc0de;">
+<table class="table table-hover" style="margin-top:20px; font-size:1.2em">
     <thead>
         {% if user_grant == 'user' %}
         <th>客服人员</th>
@@ -9,7 +10,6 @@
         {% endif %}
         <th>手机类型</th>
         <th>工单标题</th>
-        <th>工单信息</th>
         <th>工单时间</th>
         <th>工单详情</th>
     </thead>
@@ -36,18 +36,17 @@
                     data-original-title="" title="">{{ list.order_title }}</span>
             </td>
             <td>
-                <span data-html='true' data-toggle='popover' data-trigger='hover' data-containter='body' data-placement='top' data-content='{{ list.order_details }}'
-                    data-original-title="" title="">{{ list.order_details }}</span>
-            </td>
-            <td>
                 <span data-html='true' data-toggle='popover' data-trigger='hover' data-containter='body' data-placement='top' data-content='{{ list.order_time }}'
                     data-original-title="" title="">{{ list.order_time }}</span>
             </td>
-            <td><button order-id={{ list.order_id}} class="btn btn-link" style="padding:0px;" onclick="order_details(this)">查看详情</button></td>
+            <td>
+                <button order-id={{ list.order_id}} grade-for={{ list.server_id}} class="btn btn-link" style="padding:0px;" onclick="order_details(this)">查看详情</button>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+</div>
 <style>
     .user-orders {
         border-bottom: 6px solid #39b58b;
@@ -64,8 +63,11 @@
     function order_details(elem) {
             var html = ""
             var order_id = $(elem).attr('order-id')
+            var grade_for = $(elem).attr('grade-for')
             var commitInfo = httpGet("/commit_html/?order_id=" + order_id + "&order_type=details");
             html += commitInfo;
+            html += "<span id='order-id' style='display:none;'>" + order_id + "</span>";
+             html += "<span id='grade-for' style='display:none;'>" + grade_for + "</span>";
             var title = "查看工单详情"
             dialogAlert(title, html);
             $(".bootstrap-dialog-message").css("height", "500px");

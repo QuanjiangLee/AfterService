@@ -33,9 +33,9 @@ class workOrders(models.Model):
     order_title = models.CharField(max_length = 30)
     order_details = models.CharField(max_length = 255)
     order_status = models.BooleanField(default=False)
+    grade_status = models.BooleanField(default=False)
     order_grade = models.FloatField(default='0.0')
     order_time = models.DateTimeField(auto_now_add = True)
-    
     class Meta:  #按时间下降排序
         ordering = ['-order_time']
     def __str__(self):
@@ -57,11 +57,10 @@ class commitDetails(models.Model):
 
 class gradesInf(models.Model):
     grade_id = models.ForeignKey(workOrders,related_name='grade_order', on_delete=models.DO_NOTHING)
-    user_id = models.ForeignKey(workOrders,related_name='grade_user', on_delete=models.DO_NOTHING)
-    server_id = models.ForeignKey(workOrders, on_delete=models.DO_NOTHING)
+    user_id = models.ForeignKey(userInf,related_name='grade_user', on_delete=models.DO_NOTHING)
+    server_id = models.ForeignKey(userInf, on_delete=models.DO_NOTHING)
     user_grade = models.FloatField()
     user_message =  models.TextField()
-    ava_grade = models.FloatField()
     grade_time = models.DateTimeField(auto_now_add = True)
     def __str__(self):
         return self.user_message

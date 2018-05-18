@@ -1,9 +1,11 @@
 {% extends extend %}
 {% block content %}
-<div>
+<div style="margin:30px;padding:1px;border:0.2px solid #5bc0de;">
+<div style="border: 1px solid #ddd;">
     <span class="glyphicon glyphicon-edit btn btn-link" style="color:#337ab7;" onclick="alter_userinf()" aria-hidden="true">修改个人资料</span>
 </div>
-<ul id="self-inf" class="list-group" style="height:150px;text-align: left;">
+<div>
+<ul id="self-inf" class="list-group" style="text-align: left;">
     <li class="list-group-item">&emsp;用户昵称：
         <span id="userName" contenteditable="false" style="width:200px;">{{ user_info.user_nickname }}</span>
     </li>
@@ -13,9 +15,11 @@
     <li class="list-group-item">个性签名：
         <span id="userMark" contenteditable="false" style="width: 200px; color:salmon;">{{ user_info.user_mask }}</span>
     </li>
-    <li class="list-group-item">&emsp;&emsp;评分：
+    {% if user_grant == "admin" %}
+    <li class="list-group-item" style="border:none;">&emsp;&emsp;评分：
         <span id="userGrades" contenteditable="false" style="width:200px;">{{ user_info.user_grades }}</span>
     </li>
+    {% endif %}
     <li>
         <div class="alter-menu" style="margin-top: 20px;text-align: center; display:none;" >
             <input type="button" onclick="alterSubmit(this)" class="btn btn-success" value="提交">
@@ -24,6 +28,8 @@
         </div>
     </li>
 </ul>
+</div>
+</div>
 <style>
     .user-info {
         border-bottom: 6px solid #39b58b;
@@ -33,6 +39,9 @@
     }
     .content-info {
         display:  block;
+    }
+    .list-group-item {
+        border-top:none;
     }
 </style>
 <script>
