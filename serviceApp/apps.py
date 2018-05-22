@@ -38,9 +38,9 @@ def get_user_grant(request):
         user_grant = "custom"
     return user_grant
 
-def register_user(userNo, passwd, user_sex="男"):
+def register_user(userNo, passwd, user_sex="boy"):
     values = (userNo, passwd, user_sex)
-    dbStr = "insert into serviceApp_userinf (user_name, user_nickname, user_grant, user_sex, user_mask, user_passwd) values('{0}','{0}',0,'{2}','这个家伙很懒！', password('{1}'));"
+    dbStr = "insert into serviceApp_userinf (user_name, user_nickname, user_grant, user_sex,image_path, user_mask,user_grades, user_passwd) values('{0}','{0}',0,'{2}','0','its a lazy man!',0.0, password('{1}'));"
     dbStr = dbStr.format( *values )
     print(dbStr)
     db = DBMethods()

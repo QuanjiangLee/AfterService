@@ -1,6 +1,7 @@
 * {
     margin: 0px;
-    padding: 0px
+    padding: 0px;
+    font-family: "黑体"
 }
     .container {
         margin-top: 20px;
@@ -169,3 +170,11 @@ nav>li:focus, .nav>li:hover {
         background-color: #109def;
         border: 1px solid black;
     }*/
+
+.address{
+    color: #333!important;
+}
+
+.text-uppercase{
+    font-size: 20px;
+}

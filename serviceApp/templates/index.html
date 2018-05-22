@@ -54,19 +54,60 @@ function filterHostResult(ret) {
             <div class="row">
                 <div class="col-md-8">
                     <h5 class="text-uppercase">手机售后服务平台</h5>
-                    <p style="padding:10px 20px;">专业手机设备售后服务平台，通过整合线上线下相关资源，提供进口、国产等主流机型的专业售后工单服务。</p>
+                    <p style="padding:10px 20px;font-size: 20px;">专业手机设备售后服务平台，通过整合线上线下相关资源，提供进口、国产等主流机型的专业售后服务。</p>
                 </div>
                 <div class="col-md-4" style="text-align: left;">
                     <h5 class="text-uppercase">联系我们</h5>
                     <ul class="list-unstyled" >
                         <li>
-                            <a href="javascript:void(0);"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></a><span>2018年4月10号</span>
+                            <a href="javascript:void(0);"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></a><span>
+
+
+                        <span id="sp_time"></span>
+
+                        <script type="text/javascript">
+
+                        setInterval(function(){
+
+                        var dd = new Date();
+
+                        var y = dd.getFullYear();
+
+                        var m = dd.getMonth() + 1;
+
+                        var d = dd.getDate();
+
+                        var h = dd.getHours();
+
+                        var mi = dd.getMinutes();
+
+                        var s = dd.getSeconds();
+
+                        var str = y + "年" + m + "月" + d + "日&nbsp;&nbsp;"+ "&nbsp;&nbsp;星期" + "日一二三四五六".charAt(dd.getDay());
+
+                        document.getElementById("sp_time").innerHTML = str;
+
+                        },1000);
+
+                        
+
+
+
+
+
+
+
+                        </script>
+
+ 
+
+                            </span>
                         </li>
                         <li>
-                            <a href="javascript:void(0);"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></a><span>18829298880</span>
+                            <a href="javascript:void(0);"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></a><span>18229036123&nbsp;17691090667</span>
                         </li>
                         <li>
-                            <a href="javascript:void(0);"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></a><span>西安市金花南路5号理工大厦</span>
+                            <a href="javascript:void(0);"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></a><a target="_blank" class="address" href="http://map.baidu.com/?newmap=1&ie=utf-8&s=s%26wd%3D%E8%A5%BF%E5%AE%89%E7%90%86%E5%B7%A5%E5%A4%A7%E5%AD%A6%E9%87%91%E8%8A%B1%E6%A0%A1%E5%8C%BA%E5%8D%97%E9%97%A8"><span>西安市金花南路5号理工大厦</span></a>
                         </li>
                     </ul>
                 </div>
