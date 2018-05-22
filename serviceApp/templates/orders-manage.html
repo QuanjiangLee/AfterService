@@ -1,6 +1,7 @@
 {% extends extend %} 
 {% block content %}
-<table class="table table-hover" style="table-layout:fixed;margin-top:20px; font-size:1.2em">
+<div style="width: 100%;margin:20px 30px;padding:1px;border:0.2px solid #5bc0de;">
+<table class="table table-hover" style="margin-top:20px; font-size:1.2em">
     <thead>
         {% if user_grant == 'user' %}
         <th>客服人员</th>
@@ -9,7 +10,6 @@
         {% endif %}
         <th>手机类型</th>
         <th>工单标题</th>
-        <th>工单信息</th>
         <th>工单时间</th>
         <th>工单操作</th>
     </thead>
@@ -36,14 +36,11 @@
                     data-original-title="" title="">{{ list.order_title }}</span>
             </td>
             <td>
-                <span data-html='true' data-toggle='popover' data-trigger='hover' data-containter='body' data-placement='top' data-content='{{ list.order_details }}'
-                    data-original-title="" title="">{{ list.order_details }}</span>
-            </td>
-            <td>
                 <span data-html='true' data-toggle='popover' data-trigger='hover' data-containter='body' data-placement='top' data-content='{{ list.order_time }}'
                     data-original-title="" title="">{{ list.order_time }}</span>
             </td>
             <td>
+                <button order-id={{ list.order_id}} class="btn btn-link" style="padding:0px;" onclick="order_details(this)">查看详情</button>
                 <button order-id={{ list.order_id }} id="close_id" class="btn btn-link" style="padding:0px;" onclick="order_commit(this)">工单回复</button>
                 <button order-id={{ list.order_id }} class="btn btn-link" style="padding:0px;" onclick="order_close()">工单关闭</button>
             </td>
@@ -51,6 +48,7 @@
         {% endfor %}
     </tbody>
 </table>
+</div>
 <style>
         .admin-orders {
         border-right: 6px solid #39b58b;
@@ -98,5 +96,16 @@
             $(".bootstrap-dialog-message").css("overflow", "scroll");
             $(".bootstrap-dialog-message").css("text-align", "left");
         } 
+    function order_details(elem) {
+        var html = ""
+        var order_id = $(elem).attr('order-id')
+        var commitInfo = httpGet("/commit_html/?order_id=" + order_id + "&order_type=details");
+        html += commitInfo;
+        var title = "查看工单详情"
+        dialogAlert(title, html);
+        $(".bootstrap-dialog-message").css("height", "500px");
+        $(".bootstrap-dialog-message").css("overflow", "scroll");
+        $(".bootstrap-dialog-message").css("text-align", "left");
+    }
 </script>
 {% endblock %}

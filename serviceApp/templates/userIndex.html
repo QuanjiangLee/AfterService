@@ -8,15 +8,17 @@
     <title>登录用户页面</title>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/index.css" rel="stylesheet">
+    <link href="/static/css/star-rating.css" rel="stylesheet">
     <script src="/static/js/jquery-1.12.4.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/ajax.js"></script>
     <script src="/static/js/text-utils.js"></script>
     <script src="/static/js/index.js"></script>
+    <script src="/static/js/star-rating.js"></script>
 </head>
 
 <body>
-    <nav style="display:flex">
+    <nav style="display:flex;display:flex;background: url(/static/image/nav-bg.png) no-repeat;width:100%;height:100%;background-size:100% 100%;">
         <div style="flex: 1;" class="right-info">
             <div class="container-fluid text-center text-md-left">
                 <div class="row">
@@ -118,7 +120,7 @@
                 </li>
             </ul>
         </div>
-        <div class="content-info" style="margin-top:0px;">
+        <div class="content-info" style="margin:0px;">
              {% block content %} 
              {% endblock %}
         </div>

@@ -121,7 +121,7 @@ def phones_list(request):
 def servers_list(request):
     user_grant = get_user_grant(request)
     if request.GET.get('type') == "html":
-        items = userInf.objects.all()
+        items = userInf.objects.all().filter(user_grant=1)
         return render(request, 'select_servers_list.html',{'items':items})
     if user_grant == "custom":
         items = userInf.objects.all().filter(user_grant=1)
@@ -139,7 +139,7 @@ def orders_manage(request):
         return render(request, 'orders-manage.html',{'extend': 'userIndex.html','lists':lists, 'user_grant': user_grant}) 
     elif user_grant == "admin":
         login_user=request.session.get('login_user',None)
-        user=userInf.objects.filter(user_name=login_user).first()
+        user=userInf.objects.get(user_name=login_user)
         print(user)
         lists = workOrders.objects.filter(server_id=user, order_status=0)
         print(lists)
@@ -151,19 +151,28 @@ def get_servers_form(request):
     return render(request, 'servers_form.html')
 
 def get_commit_html(request):
+    user_grant = get_user_grant(request)
     if request.method == "GET":
         order_id = request.GET.get('order_id',"")
         order_type = request.GET.get('order_type',"")
-        print(order_type)
         if order_id:
             order = workOrders.objects.get(order_id=order_id)
             commit_title = order.order_title
+            commit_Details = order.order_details
             print(commit_title)
             commits = commitDetails.objects.all().filter(commit_id=order)
             if order_type:
-                return render(request, 'commit_html.html',{'commits':commits, 'commit_title': commit_title, 'order_type':order_type})
+                order_type = order.order_status
+                grade_status = order.grade_status
+                order_grade = 0.0
+                grade_details = None
+                if grade_status == 1:
+                    order_grade = order.order_grade
+                    grade_details = gradesInf.objects.filter(grade_id=order_id).latest('grade_id').user_message
+                return render(request, 'commit_html.html',{'commits':commits, 'commit_title': commit_title,'commit_Details':commit_Details, 'order_type':order_type,\
+            'grade_status':grade_status, 'order_grade':order_grade, 'grade_details': grade_details,'user_grant':user_grant})
             else:
-                return render(request, 'commit_html.html',{'commits':commits, 'commit_title': commit_title})
+                return render(request, 'commit_html.html',{'commits':commits, 'commit_title': commit_title, 'commit_Details':commit_Details, 'user_grant':user_grant})
         else:
             return render(request, 'commit_html.html')
 
@@ -189,10 +198,10 @@ def user_info(request):
     user_id = get_user_id(login_user)[0][0]
     if user_grant == "user":
         user_info = userInf.objects.filter(user_id=user_id)
-        return render(request, 'user_info.html',{'extend': 'userIndex.html','user_info': user_info[0]})
+        return render(request, 'user_info.html',{'extend': 'userIndex.html','user_info': user_info[0],'user_grant':user_grant})
     elif user_grant == "admin":
         user_info = userInf.objects.filter(user_id=user_id)
-        return render(request, 'user_info.html',{'extend': 'adminIndex.html','user_info': user_info[0]})
+        return render(request, 'user_info.html',{'extend': 'adminIndex.html','user_info': user_info[0],'user_grant':user_grant})
     else:
         return redirect('/index/home/')
 
@@ -330,6 +339,41 @@ def commitorder(request):
         print(e)
         return HttpResponse(json.dumps(False), content_type='application/json;charset=utf-8')
     else:
+        return HttpResponse(json.dumps(True), content_type='application/json;charset=utf-8')
+
+@csrf_exempt
+def gradeorder(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode("utf-8"))
+    else:
+        return HttpResponse(json.dumps(False), content_type='application/json;charset=utf-8')
+    try:
+        order_id = data['order_id']
+        grade_for = data['grade_for']
+        user_grade = data['order_grade']
+        user_message = data['grade_details']
+        order = workOrders.objects.get(order_id=order_id)
+        grade_for = userInf.objects.get(user_name=grade_for)
+        login_user=request.session.get('login_user',None)
+        grade_from = userInf.objects.get(user_name=login_user)
+        gradesInf.objects.create(grade_id=order, user_id=grade_from, server_id = grade_for, user_grade = user_grade, user_message=user_message)
+        workOrders.objects.filter(order_id=order_id).update(grade_status=1,order_grade=user_grade)
+    except Exception as e:
+        print(e)
+        return HttpResponse(json.dumps(False), content_type='application/json;charset=utf-8')
+    else:
+        grade = userInf.objects.get(user_id=grade_for.user_id).user_grades
+        print(grade)
+        cur_grade = 0.0
+        if grade > 0.0:
+            cur_grade = (grade + float(user_grade)) / 2.0
+        else:
+            cur_grade = user_grade
+        try:
+            userInf.objects.filter(user_id=grade_for.user_id).update(user_grades=cur_grade)
+        except Exception as e:
+            print(e)
+            return HttpResponse(json.dumps(False), content_type='application/json;charset=utf-8')
         return HttpResponse(json.dumps(True), content_type='application/json;charset=utf-8')
 
 @csrf_exempt

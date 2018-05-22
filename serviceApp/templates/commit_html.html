@@ -1,4 +1,9 @@
-<label style="font-size:1.2em;margin-bottom:15px;">工单标题：&nbsp;{{ commit_title }}</label><br>
+<div style="width:100%;border:1px solid #bce8f1;padding:15px;">
+<label style="font-size:1.2em;">工单标题：&nbsp;{{ commit_title }}</label>
+<hr style="margin-top:0px">
+<label style="font-size:1.2em;width:100%">工单内容：<hr style="margin-top:0px; margin-bottom:10px;">{{ commit_Details }}</label>
+</div>
+<br>
 {% for commit in commits %}
 <div class="panel panel-info">
     <div class="panel-heading">
@@ -11,40 +16,105 @@
     </div>
 </div>
 {% endfor %}
-{% if order_type == 'details' %}
-<label style="font-size:1.2em;">工单状态：&nbsp;<span style="color:red">已关闭！</span></lable>
+{% if order_type == 1 %}
+<span style="font-size:1.2em;">工单状态：</span>&nbsp;<span style="color:red">已关闭！</span><br>
+{% if grade_status == 0 %}
+{% if user_grant == "admin" %}
+<span style="float: right;color:red" class="btn btn-link" >此订单用户未作评价，请耐心等待用户评价！</span>
+{% else %}
+<span style="float: right;color:red" class="btn btn-link" onclick="order_grade()">此订单未评价，给客服评分？</span><br><br>
+<div class="grade-div" style="display:none;">
+<label>请对客服人员进行评分：</label>
+<input id="grade-input" value="4" type="number" class="rating" min=0 max=5 step=0.2 data-size="sm">
+    <label>评价内容：</label>
+    <textarea class="form-control" style="margin: 10px 0px;" name="grade-details" rows="5" placeholder="请输入给客服人员的评价信息"></textarea>
+    <div class="alter-info" style=" text-align:center;">
+        <button onclick="gradeReset()" class="btn btn-info" name="reset">重置内容</button>
+        <button onclick="gradeSubmit()" class="btn btn-primary" name="submit">提交</button>
+    </div>
+</div>
+{% endif %}
+{% elif grade_status == 1 %}
+<span style="float: right;" class="btn btn-link" onclick="view_grade()">此订单已评价，查看评分？</span><br><br>
+<div class="grade-div" style="display:none;margin-bottom:60px;">
+    <label>您对客服人员的评分：</label>
+    <input id="grade-input" value="{{ order_grade }}" type="number" class="rating" min=0 max=5 step=0.2 data-size="sm">
+    <label>您对客服人员的评价内容：</label><br>
+    <span id="grade-details">{{ grade_details }}</span>
+</div>
+{% endif %}
+{% elif order_type == 0 %}
+<label style="font-size:1.2em;">工单状态：&nbsp;
+    <span style="color:green;">正在进行！</span>
+    </lable>
 {% else %}
 <div class="reply-input">
 <label>回复内容：</label>
 <textarea class="form-control" style="margin: 10px 0px;" name="order-details" rows="5" placeholder="请输入工单回复详细内容"></textarea>
 <div class="alter-info" style=" text-align:center;">
-    <button onclick="commitReset()" class="btn btn-info" name="reset">重置</button>
+    <button onclick="commitReset()" class="btn btn-info" name="reset">重置内容</button>
     <button onclick="commitSubmit()" class="btn btn-primary" name="submit">提交</button>
 </div>
 </div>
 <span style="float: right;" class="btn btn-link" onclick="order_close()">关闭工单？</span>
 {% endif %}
 <script>
-        function commitReset() {
-            $("textarea[name='order-details']").val('');
+    (function () {
+        $("#grade-input").rating();
+    })()
+    function order_grade() {
+        $(".grade-div").css("display","block");
+        $(".clear-rating").css("display", "none");
+    }
+    function view_grade() {
+        $(".grade-div").css("display", "block");
+        $(".clear-rating").css("display", "none");
+        $(".rating-stars").off();
+    }
+    function gradeSubmit() {
+        var order_id = $('#order-id').text();
+        var order_grade = $("#grade-input").val()
+        var grade_for = $('#grade-for').text();
+        var grade_details = $("textarea[name='grade-details']").val();
+        alert(order_id)
+        alert(order_grade)
+        alert(grade_for)
+        alert(grade_details)
+        data = { 'order_id': order_id, 'grade_for': grade_for,'order_grade': order_grade, 'grade_details': grade_details };
+        postRequest("/gradeorder/", data, true, gradeResult);
+    }
+    function gradeResult(ret) {
+        if (ret == true) {
+            $(".Dialog").remove();
+            alert("恭喜您客服评价成功！");
+            view_grade();
+        } else {
+            alert("客服评价失败，请稍后重试！")
         }
-        function commitSubmit() {
-            var order_id = $('#order_id').text();
-            var commit_to = $('#commit_to').text();
-            var order_details = $("textarea[name='order-details']").val();
-            /*alert(phone_id)
-            alert(server_id)
-            alert(order_title)
-            alert(order_details)*/
-            data = { 'order_id': order_id, 'commit_to': commit_to, 'order_details': order_details };
-            postRequest("/commitorder/", data, true, commitResult);
+    }
+    function gradeReset() {
+        $("textarea[name='grade-details']").val('');
+    }
+    function commitSubmit() {
+        var order_id = $('#order_id').text();
+        var commit_to = $('#commit_to').text();
+        var order_details = $("textarea[name='order-details']").val();
+        /*alert(phone_id)
+        alert(server_id)
+        alert(order_title)
+        alert(order_details)*/
+        data = { 'order_id': order_id, 'commit_to': commit_to, 'order_details': order_details };
+        postRequest("/commitorder/", data, true, commitResult);
+    }
+    function commitResult(ret) {
+        if (ret == true) {
+            $(".Dialog").remove();
+            alert("工单回复成功，请耐心等待对方的反馈！");
+        } else {
+            alert("工单申回复失败，请稍后重试！")
         }
-        function commitResult(ret) {
-            if (ret == true) {
-                $(".Dialog").remove();
-                alert("工单回复成功，请耐心等待回复！");
-            } else {
-                alert("工单申回复失败，请稍后重试！")
-            }
-        }
+    }
+    function commitReset() {
+        $("textarea[name='order-details']").val('');
+    }
 </script>
