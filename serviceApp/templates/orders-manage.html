@@ -65,7 +65,7 @@
         var reply = confirm("您确认要关闭此工单吗?")
         if (reply == true) {
         var order_id = $("#close_id").attr('order-id')
-        alert(order_id) 
+        //alert(order_id) 
         postRequest("/order_close/", {'order_id': order_id}, true, order_close_ret);
         }else{
             alert("你取消了关闭工单操作!")

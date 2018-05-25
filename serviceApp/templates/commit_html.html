@@ -76,10 +76,10 @@
         var order_grade = $("#grade-input").val()
         var grade_for = $('#grade-for').text();
         var grade_details = $("textarea[name='grade-details']").val();
-        alert(order_id)
+        /*alert(order_id)
         alert(order_grade)
         alert(grade_for)
-        alert(grade_details)
+        alert(grade_details)*/
         data = { 'order_id': order_id, 'grade_for': grade_for,'order_grade': order_grade, 'grade_details': grade_details };
         postRequest("/gradeorder/", data, true, gradeResult);
     }
