@@ -18,7 +18,6 @@ function userLogin() {
     html += '用户ID:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="text" placeholder="请输入用户ID" name="username"><br>'
     html += '密&emsp;码:<input style="height: 35px;margin: 10px;box-shadow: none;border: 1px solid #e5e5e5;border-radius: 2px;padding: 6px 10px;" type="password" placeholder="请输入密码" name="password"><br>'
     html += '<input style="margin: 10px;" type="button" onclick="checkLogin()" class="sign-in-button btn btn-info" name="submit" value="登录"><input style="margin: 10px;" type="button" onclick="userRegister()" class="sign-in-button btn btn-info" name="regsiter" value="注册">'
-    html += '<div class="rightTips"><a href="javascript:void(0);">忘记密码？</a></div></div>'
     title = '登录';
     dialogAlert(title, html);
 }
@@ -105,7 +104,9 @@ function registerResult(ret) {
     if (ret['ret'] == true) {
         alert("恭喜注册新用户成功！")
         userLogin();
-    } else {
+    } else if (ret['ret'] == 'registered'){
+        alert("opps!注册新用户失败，您输入的用户名已经注册过了！")
+    }else {
         alert("opps!注册新用户失败！")
     }
 }

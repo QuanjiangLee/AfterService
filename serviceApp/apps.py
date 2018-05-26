@@ -4,14 +4,6 @@
 #    name = 'serviceApp'
 from serviceApp.DB_connect import DBMethods
 
-def is_user_exist(userNo, passwd):
-    values = (userNo, passwd)
-    dbStr = "select Count(*), user_grant from serviceApp_userinf where user_name='{0}' and user_passwd=password('{1}');"
-    dbStr = dbStr.format( *values )
-    print(dbStr)
-    db = DBMethods()
-    ret = db.selectMethods(dbStr)
-    return ret
 
 def is_logined(request):
     login_user=request.session.get('login_user',None)
@@ -38,6 +30,16 @@ def get_user_grant(request):
         user_grant = "custom"
     return user_grant
 
+'''
+def is_user_exist(userNo, passwd):
+    values = (userNo, passwd)
+    dbStr = "select Count(*), user_grant from serviceApp_userinf where user_name='{0}' and user_passwd=password('{1}');"
+    dbStr = dbStr.format( *values )
+    print(dbStr)
+    db = DBMethods()
+    ret = db.selectMethods(dbStr)
+    return ret
+
 def register_user(userNo, passwd, user_sex="boy"):
     values = (userNo, passwd, user_sex)
     dbStr = "insert into serviceApp_userinf (user_name, user_nickname, user_grant, user_sex,image_path, user_mask,user_grades, user_passwd) values('{0}','{0}',0,'{2}','0','its a lazy man!',0.0, password('{1}'));"
@@ -46,6 +48,7 @@ def register_user(userNo, passwd, user_sex="boy"):
     db = DBMethods()
     ret = db.updateMethods(dbStr)
     return ret
+
 
 def admin_add_phones(phoneName, fileName, phoneDesp, login_user):
     values = (phoneName, fileName, phoneDesp, login_user)
@@ -64,3 +67,4 @@ def get_user_id(userName):
     db = DBMethods()
     ret = db.selectMethods(dbStr)
     return ret
+'''

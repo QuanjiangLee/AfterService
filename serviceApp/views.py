@@ -15,6 +15,7 @@ from serviceApp.apps import *
 BASE_DIR =os.path.abspath('.')
 UPLOAD_PATH = 'serviceApp/static/pic_folder'
 
+
 def login(request):
     return render(request, 'login.html')
 
@@ -29,10 +30,10 @@ def verifyLogin(request):
         passwd = data['passwd']
     print('userNo',userNo)
     print('passwd',passwd)
-    user = is_user_exist(userNo, passwd)
+    user = userInf.objects.get(user_name=userNo, user_passwd=passwd)
     print('user is', user)
-    if user[0][0] > 0:
-        user_grant = user[0][1]
+    if user:
+        user_grant = user.user_grant
         request.session["login_user"] = userNo
         request.session["user_grant"] = user_grant
         sessionId=request.session.session_key 
@@ -195,7 +196,7 @@ def his_orders_list(request):
 def user_info(request):
     user_grant = get_user_grant(request)
     login_user=request.session.get('login_user',None)
-    user_id = get_user_id(login_user)[0][0]
+    user_id = userInf.objects.get(user_name=login_user).user_id
     if user_grant == "user":
         user_info = userInf.objects.filter(user_id=user_id)
         return render(request, 'user_info.html',{'extend': 'userIndex.html','user_info': user_info[0],'user_grant':user_grant})
@@ -215,10 +216,15 @@ def registerUser(request):
         userNo = data['userNo']
         passwd = data['passwd']
         print(userNo, passwd)
-        if register_user(userNo,passwd):
-            return HttpResponse(json.dumps({'ret':True}), content_type='application/json;c:harset=utf-8')
+        ret = userInf.objects.filter(user_name=userNo)
+        if ret:
+            return HttpResponse(json.dumps({'ret':'registered'}), content_type='application/json;charset=utf-8')
         else:
-            return HttpResponse(json.dumps({'ret':False}), content_type='application/json;charset=utf-8')
+            ret = userInf.objects.create(user_name=userNo, user_nickname=userNo, user_grant=0, user_sex="男", user_mask="这个人太懒了！",user_grades=0.0, user_passwd=passwd)
+            if ret:
+                return HttpResponse(json.dumps({'ret':True}), content_type='application/json;c:harset=utf-8')
+            else:
+                return HttpResponse(json.dumps({'ret':False}), content_type='application/json;charset=utf-8')
     except Exception as err:
         print(str(err))
         return HttpResponse(json.dumps({'ret':False}), content_type='application/json;charset=utf-8')
@@ -269,8 +275,8 @@ def admin_update_phones(request):
             return HttpResponse(json.dumps({'ret':False}), content_type='application/json;charset=utf-8')
     elif type == 'add':
         login_user=request.session.get('login_user',None)
-        user_id = get_user_id(login_user)[0][0]
-        ret = admin_add_phones(phoneName, file_data.name, phoneDesp, user_id)
+        user = userInf.objects.get(user_name=login_user)
+        ret = phonesInf.objects.create(phone_name=phoneName, image_path=file_data.name, phone_details=phoneDesp, admin_id=user)
         #print('ret', ret)
         if ret:
             return HttpResponse(json.dumps(True), content_type='application/json')
@@ -287,7 +293,7 @@ def alert_user_info(request):
         userMark = data['userMark']
         print(userName, userSex, userMark)
         login_user=request.session.get('login_user',None)
-        user_id = get_user_id(login_user)[0][0]
+        user_id = userInf.objects.get(user_name=login_user).user_id
         ret = userInf.objects.filter(user_id=user_id).update(user_nickname=userName,user_sex=userSex, user_mask=userMark)
         if ret > 0:
             return HttpResponse(json.dumps(True), content_type='application/json;charset=utf-8')
