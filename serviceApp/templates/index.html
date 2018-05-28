@@ -17,32 +17,6 @@
         background-color: #cccccc8f; 
     }
   </style>
-  <script type="text/javascript">
-
-function filterHost() {
-    var keyWords = $("input[name='sinput']").val();
-    //alert(keyWords)
-    getRequest("/filterHost/", "keyWords="+keyWords, true, filterHostResult);
-}
-function enterSearch(){
-    $("input[name = 'sinput']").keydown(function(event){  
-        if(event.which == "13")      
-            filterHost(); 
-    })
-}
-function filterHostResult(ret) {
-    if(ret) {
-        var newDoc = document.open("text/html", "replace");
-        newDoc.write(ret);
-        newDoc.close();
-    }
-}
-   /* function btnClick(){
-        $("btn-fade").click(function(){
-            $("this").css("background-color","#00f");
-        });
-    }*/
-  </script>
   </head>
   <body>
     <nav style="display:flex;background: url(/static/image/nav-bg.png) no-repeat;width:100%;height:100%;background-size:100% 100%;">
@@ -62,46 +36,20 @@ function filterHostResult(ret) {
                     <ul class="list-unstyled" >
                         <li>
                             <a href="javascript:void(0);"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></a><span>
-
-
                         <span id="sp_time"></span>
-
                         <script type="text/javascript">
-
                         setInterval(function(){
-
                         var dd = new Date();
-
                         var y = dd.getFullYear();
-
                         var m = dd.getMonth() + 1;
-
                         var d = dd.getDate();
-
                         var h = dd.getHours();
-
                         var mi = dd.getMinutes();
-
                         var s = dd.getSeconds();
-
                         var str = y + "年" + m + "月" + d + "日&nbsp;&nbsp;"+ "&nbsp;&nbsp;星期" + "日一二三四五六".charAt(dd.getDay());
-
                         document.getElementById("sp_time").innerHTML = str;
-
                         },1000);
-
-                        
-
-
-
-
-
-
-
                         </script>
-
- 
-
                             </span>
                         </li>
                         <li>
