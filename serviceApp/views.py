@@ -30,20 +30,25 @@ def verifyLogin(request):
         passwd = data['passwd']
     print('userNo',userNo)
     print('passwd',passwd)
-    user = userInf.objects.get(user_name=userNo, user_passwd=passwd)
-    print('user is', user)
-    if user:
-        user_grant = user.user_grant
-        request.session["login_user"] = userNo
-        request.session["user_grant"] = user_grant
-        sessionId=request.session.session_key 
-        print('sessionId is ',sessionId)
-        print('user_grant is',user_grant)
-        response = {'result':True, 'sessionId':sessionId, 'user_grant':user_grant}
-        return HttpResponse(json.dumps(response), content_type='application/json;charset=utf-8')
-    else:
+    try:
+        user = userInf.objects.get(user_name=userNo, user_passwd=passwd)
+    except Exception as err:
         response = {'result':False, 'error': "用户名或密码不正确!"}
-        return HttpResponse(json.dumps(response), content_type='application/json;charset=utf-8')
+        return HttpResponse(json.dumps(response), content_type='application/json;charset=utf-8')  
+    else:
+        print('user is', user)
+        if user:
+            user_grant = user.user_grant
+            request.session["login_user"] = userNo
+            request.session["user_grant"] = user_grant
+            sessionId=request.session.session_key 
+            print('sessionId is ',sessionId)
+            print('user_grant is',user_grant)
+            response = {'result':True, 'sessionId':sessionId, 'user_grant':user_grant}
+            return HttpResponse(json.dumps(response), content_type='application/json;charset=utf-8')
+        else:
+            response = {'result':False, 'error': "用户名或密码不正确!"}
+            return HttpResponse(json.dumps(response), content_type='application/json;charset=utf-8')
 
 
 @csrf_exempt
