@@ -108,8 +108,6 @@ def about(request):
 
 
 def phones_list(request):
-    if is_logined(request) is False:
-        return redirect('/index/home/')
     user_grant = get_user_grant(request)
     print(user_grant)
     if request.GET.get('type') == "html":
@@ -128,8 +126,6 @@ def phones_list(request):
         return render(request, 'admin_phones.html',{'extend': 'adminIndex.html', 'items':items}) 
 
 def servers_list(request):
-    if is_logined(request) is False:
-        return redirect('/index/home/')
     user_grant = get_user_grant(request)
     if request.GET.get('type') == "html":
         items = userInf.objects.all().filter(user_grant=1)

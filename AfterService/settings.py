@@ -82,11 +82,7 @@ db = analysis(CONFIG_NAME, CONFIG_PATH)
 db_info = db.get_result()
 
 DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.sqlite3',
-         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-     },
-    'default2': {
+    'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'serviceDb',
         'USER': db_info["USER"].decode('utf-8'),
