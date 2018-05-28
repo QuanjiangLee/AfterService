@@ -337,6 +337,7 @@ def addorderlist(request):
         order_title = data['order_title']
         order_details = data['order_details']
         server = userInf.objects.get(user_id=server_id)
+        print('server is ', server)
         phone = phonesInf.objects.get(phone_id=phone_id)
         workOrders.objects.create(user_id=user, server_id=server, phone_id=phone, order_title=order_title, order_details=order_details)
     except Exception as e:

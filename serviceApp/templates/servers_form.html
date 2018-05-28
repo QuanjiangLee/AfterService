@@ -22,10 +22,10 @@
         var server_id = $('#server-id').text();
         var order_title = $("input[name='order-title']").val();
         var order_details= $("textarea[name='order-details']").val();
-        /*alert(phone_id)
+        alert(phone_id)
         alert(server_id)
         alert(order_title)
-        alert(order_details)*/
+        alert(order_details)
         data = { 'phone_id': phone_id, 'server_id': server_id, 'order_title': order_title, 'order_details': order_details };
         postRequest("/addorderlist/", data, true, addOrderResult);
     }
