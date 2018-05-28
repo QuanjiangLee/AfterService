@@ -12,9 +12,9 @@ def is_logined(request):
     print('user_grant is',user_grant)
     if login_user is None:
         return False
-    if user_grant == 1:
+    if user_grant == True:
         return 'admin'
-    elif user_grant == 0:
+    elif user_grant == False:
         return 'user' 
     return False
 

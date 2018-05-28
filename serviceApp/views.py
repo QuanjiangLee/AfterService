@@ -62,7 +62,6 @@ def userLoginOut(request):
 
 def index(request):
     if is_logined(request) is False:
-        #cusInfo = {'hello':'unknow', "user_grant":"custom"}
         return redirect('/index/home/')
         #return render(request, 'index.html',{'cusInfo':cusInfo})
     if is_logined(request) == 'user':
@@ -75,6 +74,8 @@ def index(request):
         #return render(request, 'adminIndex.html', {'adminInfo' : adminInfo})
 
 def home(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')
     user_grant = get_user_grant(request)
     if user_grant == "user":
         return render(request, 'home.html',{'extend': 'userIndex.html'})
@@ -107,6 +108,8 @@ def about(request):
 
 
 def phones_list(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')
     user_grant = get_user_grant(request)
     print(user_grant)
     if request.GET.get('type') == "html":
@@ -125,6 +128,8 @@ def phones_list(request):
         return render(request, 'admin_phones.html',{'extend': 'adminIndex.html', 'items':items}) 
 
 def servers_list(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')
     user_grant = get_user_grant(request)
     if request.GET.get('type') == "html":
         items = userInf.objects.all().filter(user_grant=1)
@@ -137,6 +142,8 @@ def servers_list(request):
         return render(request, 'servers_list.html',{'extend': 'userIndex.html','items':items})
 
 def orders_manage(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')
     user_grant = get_user_grant(request)
     if user_grant == "user":
         login_user=request.session.get('login_user',None)
@@ -157,6 +164,8 @@ def get_servers_form(request):
     return render(request, 'servers_form.html')
 
 def get_commit_html(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')
     user_grant = get_user_grant(request)
     if request.method == "GET":
         order_id = request.GET.get('order_id',"")
@@ -183,6 +192,8 @@ def get_commit_html(request):
             return render(request, 'commit_html.html')
 
 def his_orders_list(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')
     user_grant = get_user_grant(request)
     print(user_grant)
     if user_grant == "user":
@@ -199,6 +210,8 @@ def his_orders_list(request):
         return redirect('/index/home/')
 
 def user_info(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')
     user_grant = get_user_grant(request)
     login_user=request.session.get('login_user',None)
     user_id = userInf.objects.get(user_name=login_user).user_id
@@ -236,6 +249,8 @@ def registerUser(request):
 
 @csrf_exempt
 def admin_update_phones(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')
     if not request.is_ajax() and request.method != "POST":
         return HttpResponse(json.dumps(False), content_type='application/json')
     print(request.FILES)
@@ -288,6 +303,8 @@ def admin_update_phones(request):
 
 @csrf_exempt
 def alert_user_info(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
     else:
@@ -310,6 +327,8 @@ def alert_user_info(request):
 
 @csrf_exempt
 def addorderlist(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
     else:
@@ -333,6 +352,8 @@ def addorderlist(request):
 
 @csrf_exempt
 def commitorder(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
     else:
@@ -354,6 +375,8 @@ def commitorder(request):
 
 @csrf_exempt
 def gradeorder(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
     else:
@@ -388,7 +411,9 @@ def gradeorder(request):
         return HttpResponse(json.dumps(True), content_type='application/json;charset=utf-8')
 
 @csrf_exempt
-def order_close(request):    
+def order_close(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')    
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
     else:
@@ -404,6 +429,8 @@ def order_close(request):
 
 @csrf_exempt
 def get_order_ma_count(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')
     admin_user=request.session.get('login_user',None)
     server_id = userInf.objects.get(user_name=admin_user)
     count = workOrders.objects.filter(server_id=server_id,order_status=False).count()
@@ -411,6 +438,8 @@ def get_order_ma_count(request):
 
 @csrf_exempt
 def get_order_his_count(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')
     admin_user=request.session.get('login_user',None)
     server_id = userInf.objects.get(user_name=admin_user)
     count = workOrders.objects.filter(server_id=server_id,order_status=True).count()
@@ -418,6 +447,8 @@ def get_order_his_count(request):
 
 @csrf_exempt
 def get_login_user(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')
     cur_user = request.session.get('login_user',None)
     login_user = userInf.objects.get(user_name=cur_user).user_nickname
     if login_user:
@@ -427,6 +458,8 @@ def get_login_user(request):
 
 @csrf_exempt
 def addHost(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')
     if not request.user.is_authenticated:
         return redirect('/login')
     if request.method == "POST":
@@ -447,6 +480,8 @@ def addHost(request):
 
 @csrf_exempt
 def del_phone_item(request):
+    if is_logined(request) is False:
+        return redirect('/index/home/')
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
     phoneId = data['phoneId']
@@ -458,33 +493,3 @@ def del_phone_item(request):
     else:
         HttpResponse(json.dumps({'ret':False}), content_type='application/json;charset=utf-8')
 
-
-@csrf_exempt
-def updateHost(request):
-    if not request.user.is_authenticated:
-        return redirect('/login')
-    if request.method == "POST":
-        data = json.loads(request.body.decode("utf-8"))
-    hostId = data['hostId']
-    hostName = data['hostName']
-    hostIp = data['hostIp']
-    hostPort = data['hostPort']
-    ret = myServerMap.objects.filter(id=hostId).update(hostName=hostName, IPAddress=hostIp, hostPort=hostPort)
-    if ret > 0:
-        return HttpResponse(json.dumps({'ret':True}), content_type='application/json;charset=utf-8')
-    else:
-        return HttpResponse(json.dumps({'ret':False}), content_type='application/json;charset=utf-8')  
-
-
-@csrf_exempt
-def filterHost(request):
-    if not request.user.is_authenticated:
-        return redirect('/login')
-    if request.method == "GET":
-        keyWords = request.GET.get('keyWords','')
-    print(keyWords)
-    if keyWords != '' or keyWords !=None:
-        hostList = myServerMap.objects.filter(hostName__icontains=keyWords)
-    else:
-        hostList = myServerMap.objects.all()
-    return render(request, 'index.html', {'hostList' : hostList})

@@ -132,7 +132,7 @@ function delItem(elem) {
     var reply = confirm("您确认要删除吗?")
     if (reply == true) {
         var phoneId = $(elem).parents(".item").attr("phone-id");
-        alert(phoneId);
+        //alert(phoneId);
         data = { 'phoneId': phoneId }
         postRequest("/adminIndex/del_phone_item/", data, true, delHostResult);
     } else {
