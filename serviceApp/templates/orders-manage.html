@@ -19,12 +19,12 @@
          {% if user_grant == 'user' %}
             <td>
                 <span data-html='true' data-toggle='popover' data-trigger='hover' data-containter='body' data-placement='top' data-content='{{ list.user_id }}'
-                    data-original-title="" title="">{{ list.server_id }}</span>
+                    data-original-title="" title="">{{ list.server_id.user_nickname }}</span>
             </td>
         {% elif user_grant == 'admin' %}
             <td>
                 <span data-html='true' data-toggle='popover' data-trigger='hover' data-containter='body' data-placement='top' data-content='{{ list.user_id }}'
-                    data-original-title="" title="">{{ list.user_id }}</span>
+                    data-original-title="" title="">{{ list.user_id.user_nickname }}</span>
             </td>
         {% endif %}
             <td>
